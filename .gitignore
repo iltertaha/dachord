@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.idea
+/.vs/dachord
+/API/bin/Debug/net6.0
+/API/obj
+/Application/bin/Debug/net6.0
+/Application/obj/Debug/net6.0
+/Persistence/bin/Debug/net6.0
+/Persistence/obj
