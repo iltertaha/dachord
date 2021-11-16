@@ -13,19 +13,21 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dachord\\Domain\\Domain.csproj",
+      "projectUniqueName": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "D:\\dachord\\Domain\\Domain.csproj",
+      "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\ilter\\.nuget\\packages\\",
-      "outputPath": "D:\\dachord\\Domain\\obj\\",
+      "outputPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

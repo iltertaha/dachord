@@ -1,25 +1,88 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dachord\\Application\\Application.csproj": {}
+    "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj": {}
   },
   "projects": {
-    "D:\\dachord\\Application\\Application.csproj": {
+    "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dachord\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\dachord\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\ilter\\.nuget\\packages\\",
-        "outputPath": "D:\\dachord\\Application\\obj\\",
+        "outputPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj"
+              },
+              "C:\\Users\\ilter\\IdeaProjects\\dachord\\Persistence\\Persistence.csproj": {
+                "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Persistence\\Persistence.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\ilter\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -37,6 +100,70 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ilter\\IdeaProjects\\dachord\\Persistence\\Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Persistence\\Persistence.csproj",
+        "projectName": "Persistence",
+        "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Persistence\\Persistence.csproj",
+        "packagesPath": "C:\\Users\\ilter\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Persistence\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Domain\\Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
