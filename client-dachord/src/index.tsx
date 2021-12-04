@@ -5,9 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
+  /*Commented strictmode to overcome 
+   * the 3rd party deprecated implementation warnings*/
+
+  /*<React.StrictMode>*/
     <App />
-  </React.StrictMode>,
+  /*</React.StrictMode>*/,
   document.getElementById('root')
 );
 
