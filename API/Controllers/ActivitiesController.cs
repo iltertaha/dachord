@@ -2,8 +2,6 @@
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 namespace API.Controllers
 {
@@ -11,15 +9,12 @@ namespace API.Controllers
     {
         private readonly IMediator mediator;
 
-        public ActivitiesController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        
 
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await this.mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query());
 
         }
 
@@ -27,7 +22,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            return Ok();
+            return await Mediator.Send(new Details.Query { Id = id });
 ;
         }  
     }

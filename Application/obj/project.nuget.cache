@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "D8iHcAGeP++/g3/6FrIxBbKiIkACNVeS2XVi7m3xJr3k49U1ChBJBG9bXPDXO9Qfy06xMguZ35/UjClqdnzuuQ==",
+  "dgSpecHash": "8BRht+bKh4O9m0Wm293Yt26AhGBnW/WJj2/WRvAvttolHJbvtmIMEm/pJeI+0M4XPmxMTa02h1SIggvzuZZzCA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ilter\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
+    "C:\\Users\\ilter\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\ilter\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.0\\microsoft.data.sqlite.core.6.0.0.nupkg.sha512",
     "C:\\Users\\ilter\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.0\\microsoft.entityframeworkcore.6.0.0.nupkg.sha512",
     "C:\\Users\\ilter\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.0\\microsoft.entityframeworkcore.abstractions.6.0.0.nupkg.sha512",
