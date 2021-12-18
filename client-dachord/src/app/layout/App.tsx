@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css'
-import { Header, List } from 'semantic-ui-react';
+import {Container, Header, List } from 'semantic-ui-react';
+import { Activity } from '../models/activity';
+import NavBar from './NavBar';
+import ActivityDashboard from '../../features/musicEvents/ActivityDashboard';
+
 
 function App() {
-    const [activities, setActivities] = useState([]);
+    const [activities, setActivities] = useState<Activity[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/Activities').then(response => {
+        axios.get<Activity[]>('http://localhost:5000/api/Activities').then(response => {
             setActivities(response.data);
             console.log(response);
 
@@ -16,18 +20,14 @@ function App() {
         // runs only one time
     },[])
   return (
-      <div>
-    
-      <Header as='h2' icon='users' content='dachord' />
-          <List>
-              {activities.map((activity: any) => (
-                  <List.Item key={activity}>
-                      {activity.title}
+      <>
+          <NavBar/>
+            <Container style={{marginTop: '7em'}}>
+                <ActivityDashboard musicEvents={activities}/>
+            </Container>
 
-                  </List.Item>))}
-          </List>
       
-    </div>
+    </>
   );
 }
 
