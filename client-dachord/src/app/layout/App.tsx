@@ -8,22 +8,39 @@ import EventDashboard from '../../features/musicEvents/EventDashboard';
 
 
 function App() {
-    const [activities, setActivities] = useState<Activity[]>([]);
+    const [events, setEvents] = useState<Activity[]>([]);
+    const [selectedEvent,setSelectedEvent] = useState<Activity | undefined>(undefined);
+
 
     useEffect(() => {
         axios.get<Activity[]>('http://localhost:5000/api/Activities').then(response => {
-            setActivities(response.data);
+            setEvents(response.data);
             console.log(response);
 
         })
         // notice empty dependency [] to avoid endless loop
         // runs only one time
     },[])
+    
+    function handleSelectEvent(id: string) {
+        setSelectedEvent(events.find( x => x.id === id));
+    }
+
+    function handleCancelSelectEvent() {
+        setSelectedEvent(undefined);
+    }
+    
+    
   return (
       <>
           <NavBar/>
             <Container style={{marginTop: '7em'}}>
-              <EventDashboard musicEvents={activities}/>
+              <EventDashboard
+                  musicEvents={events}
+                  selectedEvent={selectedEvent}
+                  selectEvent={handleSelectEvent}
+                  cancelSelectEvent={handleCancelSelectEvent}
+              />
             </Container>
 
       

@@ -7,16 +7,21 @@ import EventForm from './form/EventForm';
 
 interface Props{
     musicEvents: Activity[];
+    selectedEvent: Activity | undefined;
+    selectEvent: (id: string) => void;
+    cancelSelectEvent: () => void;
+
 }
 
-export default function EventDashboard({musicEvents} : Props){
+export default function EventDashboard({musicEvents,selectedEvent,
+                                           selectEvent,cancelSelectEvent} : Props){
     return(
         <Grid>
             <Grid.Column width="10">
-                <EventList musicEvents ={musicEvents}/>
+                <EventList musicEvents ={musicEvents} selectEvent={selectEvent}/>
             </Grid.Column>
             <Grid.Column width="6">
-                {musicEvents[0] && <EventDetails musicEvent={musicEvents[0]}/> }
+                {selectedEvent && <EventDetails musicEvent={selectedEvent} cancelSelectEvent={cancelSelectEvent}/> }
                 <EventForm />
             </Grid.Column>
         </Grid>
