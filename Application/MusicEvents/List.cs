@@ -28,7 +28,7 @@ namespace Application.MusicEvents
 
             public async Task<List<Activity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                try
+                /*try
                 {
                     for(var i  = 0; i < 10; i++)
                     {
@@ -40,8 +40,8 @@ namespace Application.MusicEvents
                 }
                 catch(Exception ex) when(ex is TaskCanceledException)
                 {
-                    _logger.LogInformation("Task was cancelled");    
-                }
+                    _logger.LogInformation("Task was cancelled");
+                }*/
                 return await _context.Activities.ToListAsync(cancellationToken);
 
             }
