@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import {Container, Header, List } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
-import ActivityDashboard from '../../features/musicEvents/ActivityDashboard';
+import EventDashboard from '../../features/musicEvents/EventDashboard';
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
       <>
           <NavBar/>
             <Container style={{marginTop: '7em'}}>
-                <ActivityDashboard musicEvents={activities}/>
+              <EventDashboard musicEvents={activities}/>
             </Container>
 
       
