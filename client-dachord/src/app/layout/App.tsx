@@ -50,6 +50,10 @@ function App() {
         setSelectedEvent(event);
 
     }
+
+    function handleDeleteEvent(id: string){
+        setEvents([...events.filter(x => x.id !== id)]);
+    }
     
   return (
       <>
@@ -64,6 +68,7 @@ function App() {
                   openForm={handleFormOpen}
                   closeForm={handleFormClose}
                   createOrEdit={handleCreateOrEditEvent}
+                  deleteEvent={handleDeleteEvent}
               />
             </Container>
 
