@@ -5,7 +5,7 @@ import {Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import EventDashboard from '../../features/musicEvents/EventDashboard';
-
+import {v4 as uuid} from 'uuid';
 
 function App() {
     const [events, setEvents] = useState<Activity[]>([]);
@@ -45,7 +45,7 @@ function App() {
         // add if not exists
         event.id
             ? setEvents([...events.filter(x => x.id !== event.id),event])
-            : setEvents([...events,event]);
+            : setEvents([...events,{...event,id: uuid()}]);
         setIsEditable(false);
         setSelectedEvent(event);
 
