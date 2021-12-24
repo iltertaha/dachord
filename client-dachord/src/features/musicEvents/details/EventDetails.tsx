@@ -5,9 +5,11 @@ import { Activity } from '../../../app/models/activity';
 interface Props{
     musicEvent: Activity
     cancelSelectEvent: () => void;
+    openForm: (id: string) => void;
+
 }
 
-export default function EventDetails({musicEvent,cancelSelectEvent}: Props){
+export default function EventDetails({musicEvent,cancelSelectEvent,openForm}: Props){
     return(
         <Card fluid>
             <Image src={`/assets/eventImages/${musicEvent.category.toLowerCase()}.jpg`} wrapped ui={false} />
@@ -22,7 +24,7 @@ export default function EventDetails({musicEvent,cancelSelectEvent}: Props){
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths='2'>
-                    <Button basic color='blue' content='Edit'></Button>
+                    <Button onClick={() => openForm(musicEvent.id)} basic color='blue' content='Edit'></Button>
                     <Button onClick={cancelSelectEvent} basic color='grey' content='Cancel'></Button>
                 </Button.Group>
             </Card.Content>

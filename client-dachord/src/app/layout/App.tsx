@@ -10,7 +10,7 @@ import EventDashboard from '../../features/musicEvents/EventDashboard';
 function App() {
     const [events, setEvents] = useState<Activity[]>([]);
     const [selectedEvent,setSelectedEvent] = useState<Activity | undefined>(undefined);
-
+    const [isEditable,setIsEditable] = useState(false);
 
     useEffect(() => {
         axios.get<Activity[]>('http://localhost:5000/api/Activities').then(response => {
@@ -29,17 +29,29 @@ function App() {
     function handleCancelSelectEvent() {
         setSelectedEvent(undefined);
     }
-    
+
+    function handleFormOpen(id?: string){
+        id ? handleSelectEvent(id) : handleCancelSelectEvent();
+        setIsEditable(true);
+    }
+
+    function handleFormClose(){
+        setIsEditable(false);
+
+    }
     
   return (
       <>
-          <NavBar/>
+          <NavBar openForm={handleFormOpen}/>
             <Container style={{marginTop: '7em'}}>
               <EventDashboard
                   musicEvents={events}
                   selectedEvent={selectedEvent}
                   selectEvent={handleSelectEvent}
                   cancelSelectEvent={handleCancelSelectEvent}
+                  isEditable={isEditable}
+                  openForm={handleFormOpen}
+                  closeForm={handleFormClose}
               />
             </Container>
 

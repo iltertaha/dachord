@@ -10,19 +10,27 @@ interface Props{
     selectedEvent: Activity | undefined;
     selectEvent: (id: string) => void;
     cancelSelectEvent: () => void;
+    isEditable: boolean;
+    openForm: (id: string) => void;
+    closeForm: () => void;
 
 }
 
 export default function EventDashboard({musicEvents,selectedEvent,
-                                           selectEvent,cancelSelectEvent} : Props){
+                                           selectEvent,cancelSelectEvent,
+                                                isEditable,openForm,closeForm} : Props){
     return(
         <Grid>
             <Grid.Column width="10">
                 <EventList musicEvents ={musicEvents} selectEvent={selectEvent}/>
             </Grid.Column>
             <Grid.Column width="6">
-                {selectedEvent && <EventDetails musicEvent={selectedEvent} cancelSelectEvent={cancelSelectEvent}/> }
-                <EventForm />
+                {selectedEvent && !isEditable && <EventDetails
+                                    musicEvent={selectedEvent}
+                                    cancelSelectEvent={cancelSelectEvent}
+                                    openForm={openForm}
+                /> }
+                {isEditable && <EventForm closeForm={closeForm} event={selectedEvent}/>}
             </Grid.Column>
         </Grid>
 

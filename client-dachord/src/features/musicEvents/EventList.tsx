@@ -7,7 +7,7 @@ interface Props {
     selectEvent: (id: string) => void;
 }
 
-export default function ActivityList({musicEvents, selectEvent} : Props) {
+export default function EventList({musicEvents, selectEvent} : Props) {
     return (
         <Segment>
             <Item.Group divided>
