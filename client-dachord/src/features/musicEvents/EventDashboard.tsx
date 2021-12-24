@@ -1,5 +1,5 @@
 import React from 'react';
-import { List,Grid } from 'semantic-ui-react';
+import {Grid } from 'semantic-ui-react';
 import { Activity } from '../../app/models/activity';
 import EventDetails from './details/EventDetails';
 import EventList from './EventList';
@@ -13,12 +13,14 @@ interface Props{
     isEditable: boolean;
     openForm: (id: string) => void;
     closeForm: () => void;
+    createOrEdit: (event: Activity) => void;
 
 }
 
 export default function EventDashboard({musicEvents,selectedEvent,
                                            selectEvent,cancelSelectEvent,
-                                                isEditable,openForm,closeForm} : Props){
+                                                isEditable,openForm,closeForm,
+                                                    createOrEdit} : Props){
     return(
         <Grid>
             <Grid.Column width="10">
@@ -30,7 +32,7 @@ export default function EventDashboard({musicEvents,selectedEvent,
                                     cancelSelectEvent={cancelSelectEvent}
                                     openForm={openForm}
                 /> }
-                {isEditable && <EventForm closeForm={closeForm} event={selectedEvent}/>}
+                {isEditable && <EventForm closeForm={closeForm} event={selectedEvent} createOrEdit={createOrEdit}/>}
             </Grid.Column>
         </Grid>
 

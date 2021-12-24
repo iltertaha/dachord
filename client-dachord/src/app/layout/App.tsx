@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css'
-import {Container, Header, List } from 'semantic-ui-react';
+import {Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import EventDashboard from '../../features/musicEvents/EventDashboard';
@@ -39,6 +39,17 @@ function App() {
         setIsEditable(false);
 
     }
+
+    function handleCreateOrEditEvent(event:Activity){
+        // update if exists
+        // add if not exists
+        event.id
+            ? setEvents([...events.filter(x => x.id !== event.id),event])
+            : setEvents([...events,event]);
+        setIsEditable(false);
+        setSelectedEvent(event);
+
+    }
     
   return (
       <>
@@ -52,6 +63,7 @@ function App() {
                   isEditable={isEditable}
                   openForm={handleFormOpen}
                   closeForm={handleFormClose}
+                  createOrEdit={handleCreateOrEditEvent}
               />
             </Container>
 

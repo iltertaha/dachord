@@ -1,5 +1,4 @@
 import React from 'react';
-import react from 'react';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
 import {Button, Form, Segment } from 'semantic-ui-react';
@@ -8,10 +7,11 @@ import { Activity } from '../../../app/models/activity';
 interface Props {
     event: Activity | undefined;
     closeForm: () => void;
+    createOrEdit: (event:Activity) => void;
 }
 
 
-export default function EventForm({event:selectedEvent,closeForm}:Props){
+export default function EventForm({event:selectedEvent,closeForm,createOrEdit}:Props){
 
     const initialState = selectedEvent ?? {
         id: '',
@@ -26,13 +26,14 @@ export default function EventForm({event:selectedEvent,closeForm}:Props){
     const [event,setEvent] = useState(initialState);
 
     function handleSubmit() {
-        console.log(event);
+        createOrEdit(event)
     }
 
     function handleInputChange(e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
         const {name, value} = e.target;
         setEvent({...event, [name] : value})
     }
+
 
     return(
         <Segment clearing>
