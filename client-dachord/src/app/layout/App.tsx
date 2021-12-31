@@ -1,11 +1,11 @@
 import React, {Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css'
 import {Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import EventDashboard from '../../features/musicEvents/EventDashboard';
 import {v4 as uuid} from 'uuid';
+import agent from '../api/agent';
 
 function App() {
     const [events, setEvents] = useState<Activity[]>([]);
@@ -13,15 +13,14 @@ function App() {
     const [isEditable,setIsEditable] = useState(false);
 
     useEffect(() => {
-        axios.get<Activity[]>('http://localhost:5000/api/Activities').then(response => {
-            setEvents(response.data);
-            console.log(response);
+        agent.MusicEvents.list().then(response => {
+            setEvents(response);
 
         })
         // notice empty dependency [] to avoid endless loop
         // runs only one time
     },[])
-    
+
     function handleSelectEvent(id: string) {
         setSelectedEvent(events.find( x => x.id === id));
     }
