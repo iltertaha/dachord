@@ -7,11 +7,12 @@ import { Activity } from '../../../app/models/activity';
 interface Props {
     event: Activity | undefined;
     closeForm: () => void;
-    createOrEdit: (event:Activity) => void;
+    createOrEdit: (event: Activity) => void;
+    submitting: boolean;
 }
 
 
-export default function EventForm({event:selectedEvent,closeForm,createOrEdit}:Props){
+export default function EventForm({event:selectedEvent,closeForm,createOrEdit,submitting}:Props){
 
     const initialState = selectedEvent ?? {
         id: '',
@@ -44,7 +45,7 @@ export default function EventForm({event:selectedEvent,closeForm,createOrEdit}:P
                 <Form.Input type='date' placeholder = 'Date' value={event.date} name="date" onChange={handleInputChange} />
                 <Form.Input placeholder = 'Location'  value={event.location} name="location" onChange={handleInputChange}/>
                 <Form.Input placeholder = 'Venue' value={event.venue} name="venue" onChange={handleInputChange} />
-                <Button floated='right' positive type='submit' content='Submit'/>
+                <Button loading={submitting} floated='right' positive type='submit' content='Submit'/>
                 <Button onClick={closeForm} floated='right' type='button' content='Cancel'/>
 
             </Form>

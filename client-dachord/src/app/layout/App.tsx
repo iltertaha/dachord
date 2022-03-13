@@ -13,6 +13,7 @@ function App() {
     const [selectedEvent,setSelectedEvent] = useState<Activity | undefined>(undefined);
     const [isEditable,setIsEditable] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
 
     useEffect(() => {
@@ -52,11 +53,27 @@ function App() {
     function handleCreateOrEditEvent(event:Activity){
         // update if exists
         // add if not exists
-        event.id
-            ? setEvents([...events.filter(x => x.id !== event.id),event])
-            : setEvents([...events,{...event,id: uuid()}]);
-        setIsEditable(false);
-        setSelectedEvent(event);
+        setSubmitting(true);
+        if (event.id) {
+            agent.MusicEvents.update(event).then(() => {
+                setEvents([...events.filter(x => x.id !== event.id), event])
+                setSelectedEvent(event);
+                setIsEditable(false);
+                setSubmitting(false);
+            })
+
+        }
+        else {
+            event.id = uuid();
+            agent.MusicEvents.create(event).then(() => {
+                setEvents([...events, event]);
+                setSelectedEvent(event);
+                setIsEditable(false);
+                setSubmitting(false);
+            })
+        }
+
+        
 
     }
 
@@ -81,6 +98,8 @@ function App() {
                   closeForm={handleFormClose}
                   createOrEdit={handleCreateOrEditEvent}
                   deleteEvent={handleDeleteEvent}
+                  submitting={submitting}
+
               />
             </Container>
 
