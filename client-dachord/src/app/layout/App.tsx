@@ -6,11 +6,14 @@ import NavBar from './NavBar';
 import EventDashboard from '../../features/musicEvents/EventDashboard';
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
     const [events, setEvents] = useState<Activity[]>([]);
     const [selectedEvent,setSelectedEvent] = useState<Activity | undefined>(undefined);
     const [isEditable,setIsEditable] = useState(false);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         agent.MusicEvents.list().then(response => {
@@ -21,6 +24,7 @@ function App() {
             })
              
             setEvents(response);
+            setLoading(false);
 
         })
         // notice empty dependency [] to avoid endless loop
@@ -59,7 +63,10 @@ function App() {
     function handleDeleteEvent(id: string){
         setEvents([...events.filter(x => x.id !== id)]);
     }
-    
+
+    if (loading) return <LoadingComponent content='Loading Dachord App' />
+
+
   return (
       <>
           <NavBar openForm={handleFormOpen}/>
