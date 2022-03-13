@@ -27,6 +27,10 @@ function App() {
             setEvents(response);
             setLoading(false);
 
+            // todo (will be tested)
+            // loading icon appears during second add operation
+            setSubmitting(false);
+
         })
         // notice empty dependency [] to avoid endless loop
         // runs only one time
@@ -77,8 +81,14 @@ function App() {
 
     }
 
-    function handleDeleteEvent(id: string){
-        setEvents([...events.filter(x => x.id !== id)]);
+    function handleDeleteEvent(id: string) {
+        setSubmitting(true);
+        agent.MusicEvents.delete(id).then(() => {
+            setEvents([...events.filter(x => x.id !== id)]);
+            setSubmitting(false);
+
+        })
+        
     }
 
     if (loading) return <LoadingComponent content='Loading Dachord App' />

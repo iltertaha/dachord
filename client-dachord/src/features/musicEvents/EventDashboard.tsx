@@ -30,6 +30,7 @@ export default function EventDashboard({musicEvents,selectedEvent,
                     musicEvents={musicEvents}
                     selectEvent={selectEvent}
                     deleteEvent={deleteEvent}
+                    submitting={submitting}
                 />
             </Grid.Column>
             <Grid.Column width="6">
