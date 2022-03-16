@@ -9,7 +9,7 @@ export default class ActivityStore {
     selectedEvent: Activity | undefined = undefined;
     isEditable = false;
     loading = false;
-    loadingInitial = false;
+    loadingInitial = true;
 
     constructor() {
         // infer types whether action(method)
@@ -28,7 +28,7 @@ export default class ActivityStore {
 
     // dont have to use async await
     loadActivities = async () => {
-        this.setLoadingInitial(true);
+        
 
         try {
             const activities = await agent.MusicEvents.list();
