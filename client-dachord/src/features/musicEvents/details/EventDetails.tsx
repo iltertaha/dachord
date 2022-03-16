@@ -1,15 +1,17 @@
 import React from 'react';
 import {Button, Card, Image } from 'semantic-ui-react';
-import { Activity } from '../../../app/models/activity';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { useStore } from '../../../app/stores/store';
 
-interface Props{
-    musicEvent: Activity
-    cancelSelectEvent: () => void;
-    openForm: (id: string) => void;
 
-}
 
-export default function EventDetails({musicEvent,cancelSelectEvent,openForm}: Props){
+export default function EventDetails() {
+
+    const { activityStore } = useStore();
+    const { selectedEvent: musicEvent, openForm, cancelSelectedEvent } = activityStore;
+
+    if (!musicEvent) return <LoadingComponent/>;
+
     return(
         <Card fluid>
             <Image src={`/assets/eventImages/${musicEvent.category.toLowerCase()}.jpg`} wrapped ui={false} />
@@ -25,7 +27,7 @@ export default function EventDetails({musicEvent,cancelSelectEvent,openForm}: Pr
             <Card.Content extra>
                 <Button.Group widths='2'>
                     <Button onClick={() => openForm(musicEvent.id)} basic color='blue' content='Edit'></Button>
-                    <Button onClick={cancelSelectEvent} basic color='grey' content='Cancel'></Button>
+                    <Button onClick={cancelSelectedEvent} basic color='grey' content='Cancel'></Button>
                 </Button.Group>
             </Card.Content>
         </Card>

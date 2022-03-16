@@ -30,23 +30,7 @@ function App() {
         // runs only one time
 }, [activityStore])
 
-    function handleSelectEvent(id: string) {
-        setSelectedEvent(events.find( x => x.id === id));
-    }
-
-    function handleCancelSelectEvent() {
-        setSelectedEvent(undefined);
-    }
-
-    function handleFormOpen(id?: string){
-        id ? handleSelectEvent(id) : handleCancelSelectEvent();
-        setIsEditable(true);
-    }
-
-    function handleFormClose(){
-        setIsEditable(false);
-
-    }
+    
 
     function handleCreateOrEditEvent(event:Activity){
         // update if exists
@@ -90,16 +74,10 @@ function App() {
 
   return (
       <>
-          <NavBar openForm={handleFormOpen}/>
+          <NavBar/>
           <Container style={{ marginTop: '7em' }}>          
               <EventDashboard
                   musicEvents={activityStore.musicEvents}
-                  selectedEvent={selectedEvent}
-                  selectEvent={handleSelectEvent}
-                  cancelSelectEvent={handleCancelSelectEvent}
-                  isEditable={isEditable}
-                  openForm={handleFormOpen}
-                  closeForm={handleFormClose}
                   createOrEdit={handleCreateOrEditEvent}
                   deleteEvent={handleDeleteEvent}
                   submitting={submitting}

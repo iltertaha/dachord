@@ -5,7 +5,7 @@ import { Activity } from "../models/activity";
 export default class ActivityStore {
     musicEvents: Activity[] = [];
     // can be null type
-    selectedEvent: Activity | null = null;
+    selectedEvent: Activity | undefined = undefined;
     isEditable = false;
     loading = false;
     loadingInitial = false;
@@ -41,4 +41,23 @@ export default class ActivityStore {
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
+
+    selectEvent = (id: string) => {
+        this.selectedEvent = this.musicEvents.find(x => x.id === id);
+
+    }
+
+    cancelSelectedEvent = () => {
+        this.selectedEvent = undefined;
+    }
+
+    openForm = (id?: string) => {
+        id ? this.selectEvent(id) : this.cancelSelectedEvent();
+        this.isEditable = true;
+    }
+
+    closeForm = () => {
+        this.isEditable = false;
+    }
+
 }
