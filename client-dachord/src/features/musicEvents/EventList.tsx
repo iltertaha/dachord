@@ -8,7 +8,7 @@ import { useStore } from '../../app/stores/store';
 
 export default observer(function EventList() {
     const { activityStore } = useStore();
-    const { deleteEvent, musicEvents, loading } = activityStore;
+    const { deleteEvent, activitiesByDate, loading } = activityStore;
 
 
     const [target, setTarget] = useState('');
@@ -23,7 +23,7 @@ export default observer(function EventList() {
     return (
         <Segment>
             <Item.Group divided>
-                {musicEvents.map(m => (
+                {activitiesByDate.map(m => (
                     <Item key={m.id}>
 
                         <Item.Content>

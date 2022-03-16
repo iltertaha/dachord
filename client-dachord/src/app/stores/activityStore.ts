@@ -17,6 +17,12 @@ export default class ActivityStore {
         makeAutoObservable(this)
     }
 
+    get activitiesByDate() {
+        return Array.from(this.musicEventsRegistry.values()).sort((a, b) => {
+            return Date.parse(a.date) - Date.parse(b.date);
+        })
+    }
+
     // use arrow func
     // otherwise, explicit bound is necessary to use "this"
 
@@ -91,8 +97,6 @@ export default class ActivityStore {
                 this.selectedEvent = musicEvent;
                 this.isEditable = false;
                 this.loading = false;
-                
-                this.musicEvents.push(musicEvent);
             })
         } catch (error) {
             console.log(error);
