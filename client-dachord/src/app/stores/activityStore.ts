@@ -110,6 +110,10 @@ export default class ActivityStore {
             await agent.MusicEvents.delete(id);
             runInAction(() => {
                 this.musicEvents = [...this.musicEvents.filter(x => x.id !== id)];
+                // to avoid showing the event after deletion
+                if (this.selectedEvent?.id === id) {
+                    this.cancelSelectedEvent();
+                }
                 this.loading = false;
             })
         } catch (error){
