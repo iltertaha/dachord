@@ -1,10 +1,9 @@
-import React, {Fragment, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import 'semantic-ui-css/semantic.min.css'
 import {Button, Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import EventDashboard from '../../features/musicEvents/EventDashboard';
-import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import { useStore } from '../stores/store';
@@ -15,8 +14,6 @@ function App() {
     const { activityStore } = useStore();
 
     const [events, setEvents] = useState<Activity[]>([]);
-    const [selectedEvent,setSelectedEvent] = useState<Activity | undefined>(undefined);
-    const [isEditable,setIsEditable] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
 
@@ -32,32 +29,6 @@ function App() {
 
     
 
-    function handleCreateOrEditEvent(event:Activity){
-        // update if exists
-        // add if not exists
-        setSubmitting(true);
-        if (event.id) {
-            agent.MusicEvents.update(event).then(() => {
-                setEvents([...events.filter(x => x.id !== event.id), event])
-                setSelectedEvent(event);
-                setIsEditable(false);
-                setSubmitting(false);
-            })
-
-        }
-        else {
-            event.id = uuid();
-            agent.MusicEvents.create(event).then(() => {
-                setEvents([...events, event]);
-                setSelectedEvent(event);
-                setIsEditable(false);
-                setSubmitting(false);
-            })
-        }
-
-        
-
-    }
 
     function handleDeleteEvent(id: string) {
         setSubmitting(true);
@@ -78,7 +49,6 @@ function App() {
           <Container style={{ marginTop: '7em' }}>          
               <EventDashboard
                   musicEvents={activityStore.musicEvents}
-                  createOrEdit={handleCreateOrEditEvent}
                   deleteEvent={handleDeleteEvent}
                   submitting={submitting}
 

@@ -1,6 +1,7 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Activity } from "../models/activity";
+import { v4 as uuid } from 'uuid';
 
 export default class ActivityStore {
     musicEvents: Activity[] = [];
@@ -58,6 +59,49 @@ export default class ActivityStore {
 
     closeForm = () => {
         this.isEditable = false;
+    }
+
+    createEvent = async (musicEvent: Activity) => {
+        this.loading = true;
+        musicEvent.id = uuid();
+        try {
+            await agent.MusicEvents.create(musicEvent);
+            runInAction(() => {
+                this.musicEvents.push(musicEvent);
+                this.selectedEvent = musicEvent;
+                this.isEditable = false;
+                this.loading = false;
+
+            })
+
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+            
+        }
+    }
+
+    updateEvent = async (musicEvent: Activity) => {
+        this.loading = true;
+        try {
+            await agent.MusicEvents.update(musicEvent);
+            runInAction(() => {
+                this.musicEvents = [...this.musicEvents.filter(x => x.id !== musicEvent.id), musicEvent];
+                this.selectedEvent = musicEvent;
+                this.isEditable = false;
+                this.loading = false;
+                
+                this.musicEvents.push(musicEvent);
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+
     }
 
 }

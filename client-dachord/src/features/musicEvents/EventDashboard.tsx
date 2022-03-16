@@ -9,13 +9,11 @@ import EventForm from './form/EventForm';
 
 interface Props{
     musicEvents: Activity[];
-    createOrEdit: (event: Activity) => void;
     deleteEvent: (id: string) => void;
     submitting: boolean;
 }
 
-export default observer( function EventDashboard({ musicEvents, deleteEvent,
-    createOrEdit, submitting }: Props) {
+export default observer( function EventDashboard({ musicEvents, deleteEvent, submitting }: Props) {
 
     const { activityStore } = useStore();
     const { selectedEvent, isEditable } = activityStore;
@@ -31,9 +29,7 @@ export default observer( function EventDashboard({ musicEvents, deleteEvent,
             </Grid.Column>
             <Grid.Column width="6">
                 {selectedEvent && !isEditable && <EventDetails/> }
-                {isEditable && <EventForm
-                    createOrEdit={createOrEdit}
-                    submitting={submitting}                />}
+                {isEditable && <EventForm/>}
             </Grid.Column>
         </Grid>
 
