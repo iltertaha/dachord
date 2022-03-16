@@ -4,7 +4,7 @@ import { Activity } from "../models/activity";
 import { v4 as uuid } from 'uuid';
 
 export default class ActivityStore {
-    musicEvents: Activity[] = [];
+    musicEventsRegistry = new Map<string, Activity>();
     // can be null type
     selectedEvent: Activity | undefined = undefined;
     isEditable = false;
@@ -28,7 +28,7 @@ export default class ActivityStore {
             const activities = await agent.MusicEvents.list();
             activities.forEach(activity => {
                 activity.date = activity.date.split('T')[0];
-                this.musicEvents.push(activity);
+                this.musicEventsRegistry.set(activity.id, activity);
             })
             this.setLoadingInitial(false);
 
@@ -44,8 +44,7 @@ export default class ActivityStore {
     }
 
     selectEvent = (id: string) => {
-        this.selectedEvent = this.musicEvents.find(x => x.id === id);
-
+        this.selectedEvent = this.musicEventsRegistry.get(id);
     }
 
     cancelSelectedEvent = () => {
@@ -67,7 +66,7 @@ export default class ActivityStore {
         try {
             await agent.MusicEvents.create(musicEvent);
             runInAction(() => {
-                this.musicEvents.push(musicEvent);
+                this.musicEventsRegistry.set(musicEvent.id,musicEvent);
                 this.selectedEvent = musicEvent;
                 this.isEditable = false;
                 this.loading = false;
@@ -88,7 +87,7 @@ export default class ActivityStore {
         try {
             await agent.MusicEvents.update(musicEvent);
             runInAction(() => {
-                this.musicEvents = [...this.musicEvents.filter(x => x.id !== musicEvent.id), musicEvent];
+                this.musicEventsRegistry.set(musicEvent.id, musicEvent);
                 this.selectedEvent = musicEvent;
                 this.isEditable = false;
                 this.loading = false;
@@ -109,7 +108,7 @@ export default class ActivityStore {
         try {
             await agent.MusicEvents.delete(id);
             runInAction(() => {
-                this.musicEvents = [...this.musicEvents.filter(x => x.id !== id)];
+                this.musicEventsRegistry.delete(id);
                 // to avoid showing the event after deletion
                 if (this.selectedEvent?.id === id) {
                     this.cancelSelectedEvent();
