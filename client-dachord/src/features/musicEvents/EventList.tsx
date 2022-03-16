@@ -1,15 +1,16 @@
+import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
 import {Button, Item, Label, Segment } from 'semantic-ui-react';
 import { Activity } from '../../app/models/activity';
 import { useStore } from '../../app/stores/store';
 
-interface Props {
-    musicEvents: Activity[];
-    deleteEvent: (id: string) => void;
-    submitting: boolean;
-}
 
-export default function EventList({musicEvents,deleteEvent,submitting} : Props) {
+
+export default observer(function EventList() {
+    const { activityStore } = useStore();
+    const { deleteEvent, musicEvents, loading } = activityStore;
+
+
     const [target, setTarget] = useState('');
 
     function handleEventDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -17,7 +18,7 @@ export default function EventList({musicEvents,deleteEvent,submitting} : Props) 
         deleteEvent(id);
     }
 
-    const { activityStore } = useStore();
+    
 
     return (
         <Segment>
@@ -36,7 +37,7 @@ export default function EventList({musicEvents,deleteEvent,submitting} : Props) 
                                 <Button onClick={() => activityStore.selectEvent(m.id)} floated="right" content="Show" color="blue" />
                                 <Button
                                     name={ m.id}
-                                    loading={submitting && target === m.id}
+                                    loading={loading && target === m.id}
                                     onClick={(e) => handleEventDelete(e,m.id)}
                                     floated="right"
                                     content="Remove"
@@ -49,5 +50,5 @@ export default function EventList({musicEvents,deleteEvent,submitting} : Props) 
                 ))}
             </Item.Group>
         </Segment>)
-}
+})
 

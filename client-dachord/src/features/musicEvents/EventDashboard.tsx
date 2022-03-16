@@ -7,25 +7,16 @@ import EventDetails from './details/EventDetails';
 import EventList from './EventList';
 import EventForm from './form/EventForm';
 
-interface Props{
-    musicEvents: Activity[];
-    deleteEvent: (id: string) => void;
-    submitting: boolean;
-}
 
-export default observer( function EventDashboard({ musicEvents, deleteEvent, submitting }: Props) {
+
+export default observer( function EventDashboard() {
 
     const { activityStore } = useStore();
     const { selectedEvent, isEditable } = activityStore;
     return(
         <Grid>
             <Grid.Column width="10">
-                <EventList
-                    musicEvents={musicEvents}
-                    
-                    deleteEvent={deleteEvent}
-                    submitting={submitting}
-                />
+                <EventList/>
             </Grid.Column>
             <Grid.Column width="6">
                 {selectedEvent && !isEditable && <EventDetails/> }

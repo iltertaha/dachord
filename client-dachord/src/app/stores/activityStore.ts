@@ -104,4 +104,20 @@ export default class ActivityStore {
 
     }
 
+    deleteEvent = async (id: string) => {
+        this.loading = true;
+        try {
+            await agent.MusicEvents.delete(id);
+            runInAction(() => {
+                this.musicEvents = [...this.musicEvents.filter(x => x.id !== id)];
+                this.loading = false;
+            })
+        } catch (error){
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
 }
