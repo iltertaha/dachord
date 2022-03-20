@@ -10,7 +10,7 @@ import { useStore } from '../../../app/stores/store';
 export default observer( function EventForm(){
 
     const { activityStore } = useStore();
-    const { selectedEvent, closeForm, createEvent, updateEvent, loading } = activityStore;
+    const { selectedEvent, createEvent, updateEvent, loading } = activityStore;
 
     const initialState = selectedEvent ?? {
         id: '',
@@ -44,7 +44,7 @@ export default observer( function EventForm(){
                 <Form.Input placeholder = 'Location'  value={event.location} name="location" onChange={handleInputChange}/>
                 <Form.Input placeholder = 'Venue' value={event.venue} name="venue" onChange={handleInputChange} />
                 <Button loading={loading} floated='right' positive type='submit' content='Submit'/>
-                <Button onClick={closeForm} floated='right' type='button' content='Cancel'/>
+                <Button floated='right' type='button' content='Cancel'/>
 
             </Form>
         </Segment>

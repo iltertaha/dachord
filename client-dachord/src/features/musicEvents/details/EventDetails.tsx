@@ -8,7 +8,7 @@ import { useStore } from '../../../app/stores/store';
 export default function EventDetails() {
 
     const { activityStore } = useStore();
-    const { selectedEvent: musicEvent, openForm, cancelSelectedEvent } = activityStore;
+    const { selectedEvent: musicEvent } = activityStore;
 
     if (!musicEvent) return <LoadingComponent/>;
 
@@ -26,8 +26,8 @@ export default function EventDetails() {
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths='2'>
-                    <Button onClick={() => openForm(musicEvent.id)} basic color='blue' content='Edit'></Button>
-                    <Button onClick={cancelSelectedEvent} basic color='grey' content='Cancel'></Button>
+                    <Button basic color='blue' content='Edit'></Button>
+                    <Button basic color='grey' content='Cancel'></Button>
                 </Button.Group>
             </Card.Content>
         </Card>

@@ -23,6 +23,14 @@ export default class ActivityStore {
         })
     }
 
+    private getMusicEvent = (id: string) => {
+        return this.musicEventsRegistry.get(id);
+    }
+
+    private setMusicEvent = (event: Activity) => {
+        event.date = event.date.split('T')[0];
+        this.musicEventsRegistry.set(event.id, event);
+    }
     // use arrow func
     // otherwise, explicit bound is necessary to use "this"
 
@@ -33,8 +41,7 @@ export default class ActivityStore {
         try {
             const activities = await agent.MusicEvents.list();
             activities.forEach(activity => {
-                activity.date = activity.date.split('T')[0];
-                this.musicEventsRegistry.set(activity.id, activity);
+                this.setMusicEvent(activity);
             })
             this.setLoadingInitial(false);
 
@@ -45,26 +52,29 @@ export default class ActivityStore {
 
     }
 
+    loadActivity = async (id: string) => {
+        let event = this.getMusicEvent(id);
+        if (event) {
+            this.selectedEvent = event;
+        }
+        else {
+            this.loadingInitial = true;
+            try {
+                event = await agent.MusicEvents.details(id);
+                this.setMusicEvent(event);
+                this.setLoadingInitial(false);
+
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
 
-    selectEvent = (id: string) => {
-        this.selectedEvent = this.musicEventsRegistry.get(id);
-    }
-
-    cancelSelectedEvent = () => {
-        this.selectedEvent = undefined;
-    }
-
-    openForm = (id?: string) => {
-        id ? this.selectEvent(id) : this.cancelSelectedEvent();
-        this.isEditable = true;
-    }
-
-    closeForm = () => {
-        this.isEditable = false;
-    }
 
     createEvent = async (musicEvent: Activity) => {
         this.loading = true;
@@ -114,9 +124,6 @@ export default class ActivityStore {
             runInAction(() => {
                 this.musicEventsRegistry.delete(id);
                 // to avoid showing the event after deletion
-                if (this.selectedEvent?.id === id) {
-                    this.cancelSelectedEvent();
-                }
                 this.loading = false;
             })
         } catch (error){
