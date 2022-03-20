@@ -41,8 +41,7 @@ export default observer( function EventDashboard() {
                 <EventList/>
             </Grid.Column>
             <Grid.Column width="6">
-                {selectedEvent && !isEditable && <EventDetails/> }
-                {isEditable && <EventForm/>}
+               <h2> Filter Events </h2>
             </Grid.Column>
         </Grid>
 

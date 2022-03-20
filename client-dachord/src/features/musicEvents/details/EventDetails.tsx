@@ -1,16 +1,25 @@
-import React from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {Button, Card, Image } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 
 
 
-export default function EventDetails() {
+export default observer( function EventDetails() {
 
     const { activityStore } = useStore();
-    const { selectedEvent: musicEvent } = activityStore;
+    const { selectedEvent: musicEvent, loadActivity, loadingInitial } = activityStore;
+    const { id } = useParams<{id: string}>();
 
-    if (!musicEvent) return <LoadingComponent/>;
+
+    useEffect(() => {
+        if (id) loadActivity(id);
+
+    },[id,loadActivity] );
+
+    if (loadingInitial || !musicEvent) return <LoadingComponent />;
 
     return(
         <Card fluid>
@@ -32,4 +41,4 @@ export default function EventDetails() {
             </Card.Content>
         </Card>
     )
-}
+})

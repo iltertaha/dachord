@@ -36,7 +36,8 @@ export default class ActivityStore {
 
     // dont have to use async await
     loadActivities = async () => {
-        
+        this.loadingInitial = true;
+
 
         try {
             const activities = await agent.MusicEvents.list();
@@ -62,6 +63,7 @@ export default class ActivityStore {
             try {
                 event = await agent.MusicEvents.details(id);
                 this.setMusicEvent(event);
+                this.selectedEvent = event;
                 this.setLoadingInitial(false);
 
             } catch (error) {
