@@ -9,11 +9,14 @@ import EventList from './EventList';
 export default observer( function EventDashboard() {
 
     const { activityStore } = useStore();
+    const { loadActivities, musicEventsRegistry } = activityStore;
 
     // destructure only activityStore from the whole store
 
     useEffect(() => {
-        activityStore.loadActivities();
+        if (musicEventsRegistry.size === 0) {
+            activityStore.loadActivities();
+        } 
         // todo (will be tested)
         // loading icon appears during second add operation
         // setSubmitting(false);
