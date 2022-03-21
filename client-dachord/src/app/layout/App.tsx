@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Container } from 'semantic-ui-react';
 import HomePage from '../../features/home/HomePage';
@@ -10,7 +10,9 @@ import EventForm from '../../features/musicEvents/form/EventForm';
 import NavBar from './NavBar';
 
 function App() {
-  
+    const location = useLocation();
+
+
 
   return (
       <>
@@ -19,7 +21,7 @@ function App() {
               <Route exact path='/' component={HomePage} />
               <Route exact path='/musicEvents' component={EventDashboard} />
               <Route path='/musicEvents/:id' component={EventDetails} />
-              <Route path={['/createEvent','/manage/:id']} component={EventForm} />
+              <Route key={location.key } path={['/createEvent','/manage/:id']} component={EventForm} />
             </Container>
 
       
