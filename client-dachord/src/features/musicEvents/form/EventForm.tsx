@@ -32,7 +32,7 @@ export default observer( function EventForm(){
     
 
     function handleSubmit() {
-        if (event.id.length <= 1) {
+        if (event.id.length === 0) {
             let newEvent = {
                 ...event,
                 id: uuid()

@@ -14,7 +14,7 @@ export default observer( function EventDashboard() {
     // destructure only activityStore from the whole store
 
     useEffect(() => {
-        if (musicEventsRegistry.size === 0) {
+        if (musicEventsRegistry.size <= 1) {
             activityStore.loadActivities();
         } 
         // todo (will be tested)
