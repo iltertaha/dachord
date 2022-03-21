@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Activity } from "../models/activity";
-import { v4 as uuid } from 'uuid';
+
 
 export default class ActivityStore {
     musicEventsRegistry = new Map<string, Activity>();
@@ -85,7 +85,6 @@ export default class ActivityStore {
 
     createEvent = async (musicEvent: Activity) => {
         this.loading = true;
-        musicEvent.id = uuid();
         try {
             await agent.MusicEvents.create(musicEvent);
             runInAction(() => {

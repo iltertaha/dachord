@@ -2,15 +2,15 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Segment } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { Activity } from '../../../app/models/activity';
 import { useStore } from '../../../app/stores/store';
-
+import { v4 as uuid } from 'uuid';
 
 export default observer( function EventForm(){
-
+    const history = useHistory();
     const { activityStore } = useStore();
     const { createEvent, updateEvent, loading, loadActivity, loadingInitial } = activityStore;
     const { id } = useParams<{ id: string }>();
@@ -32,7 +32,20 @@ export default observer( function EventForm(){
     
 
     function handleSubmit() {
-        event.id ? updateEvent(event) : createEvent(event);
+        if (event.id.length === 0) {
+            let newEvent = {
+                ...event,
+                id: uuid()
+            };
+            createEvent(newEvent).then(() => {
+                history.push(`/musicEvents/${newEvent.id}`);
+            })
+        }
+        else {
+            updateEvent(event).then(() => {
+                history.push(`/musicEvents/${event.id}`);
+            })
+        }
     }
 
     function handleInputChange(e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
