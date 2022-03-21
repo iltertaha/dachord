@@ -23,7 +23,7 @@ export default observer( function EventDashboard() {
 
         // notice empty dependency [] to avoid endless loop
         // runs only one time
-    }, [activityStore])
+    }, [musicEventsRegistry.size, loadActivities])
 
 
 
