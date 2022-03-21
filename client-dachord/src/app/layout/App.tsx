@@ -16,13 +16,21 @@ function App() {
 
   return (
       <>
-          <NavBar/>
-          <Container style={{ marginTop: '7em' }}>
-              <Route exact path='/' component={HomePage} />
-              <Route exact path='/musicEvents' component={EventDashboard} />
-              <Route path='/musicEvents/:id' component={EventDetails} />
-              <Route key={location.key } path={['/createEvent','/manage/:id']} component={EventForm} />
-            </Container>
+          <Route exact path='/' component={HomePage} />
+          <Route
+              path={'/(.+)'}
+              render={() => (<>
+                  <NavBar />
+                  <Container style={{ marginTop: '7em' }}>
+
+                      <Route exact path='/musicEvents' component={EventDashboard} />
+                      <Route path='/musicEvents/:id' component={EventDetails} />
+                      <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
+                  </Container>
+              </>)}
+          />
+
+          
 
       
     </>
