@@ -57,14 +57,19 @@ export default class ActivityStore {
         let event = this.getMusicEvent(id);
         if (event) {
             this.selectedEvent = event;
+            return event;
         }
         else {
             this.loadingInitial = true;
             try {
                 event = await agent.MusicEvents.details(id);
                 this.setMusicEvent(event);
-                this.selectedEvent = event;
+                runInAction(() => {
+                    this.selectedEvent = event;
+                })
+                
                 this.setLoadingInitial(false);
+                return event;
 
             } catch (error) {
                 console.log(error);

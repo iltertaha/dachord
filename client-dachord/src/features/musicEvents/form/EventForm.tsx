@@ -1,8 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {Button, Form, Segment } from 'semantic-ui-react';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { Activity } from '../../../app/models/activity';
 import { useStore } from '../../../app/stores/store';
 
@@ -10,19 +12,24 @@ import { useStore } from '../../../app/stores/store';
 export default observer( function EventForm(){
 
     const { activityStore } = useStore();
-    const { selectedEvent, createEvent, updateEvent, loading } = activityStore;
+    const { createEvent, updateEvent, loading, loadActivity, loadingInitial } = activityStore;
+    const { id } = useParams<{ id: string }>();
 
-    const initialState = selectedEvent ?? {
+    const [event, setEvent] = useState({
         id: '',
         title: '',
         category: '',
         description: '',
         date: '',
-        location:'',
+        location: '',
         venue: ''
-    }
+    });
 
-    const [event,setEvent] = useState(initialState);
+    useEffect(() => {
+        if (id) loadActivity(id).then(event => setEvent(event!))
+    }, [id, loadActivity])
+
+    
 
     function handleSubmit() {
         event.id ? updateEvent(event) : createEvent(event);
@@ -32,6 +39,8 @@ export default observer( function EventForm(){
         const {name, value} = e.target;
         setEvent({...event, [name] : value})
     }
+
+    if (loadingInitial) return <LoadingComponent content='Loading Music Event...'/>
 
 
     return(

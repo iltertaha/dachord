@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {Button, Card, Image } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -35,8 +35,8 @@ export default observer( function EventDetails() {
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths='2'>
-                    <Button basic color='blue' content='Edit'></Button>
-                    <Button basic color='grey' content='Cancel'></Button>
+                    <Button as={Link} to={`/manage/${musicEvent.id}`} basic color='blue' content='Edit'></Button>
+                    <Button as={Link} to={"/musicEvents"} basic color='grey' content='Cancel'></Button>
                 </Button.Group>
             </Card.Content>
         </Card>
