@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Item, Label } from 'semantic-ui-react'
+import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react'
 import { Activity } from '../../../app/models/activity'
 import { useStore } from '../../../app/stores/store';
 
@@ -23,28 +23,39 @@ export default function EventListItem({ event }: Props) {
     }
 
     return (
-        <Item key={event.id}>
-
-            <Item.Content>
-                <Item.Header as='a'>{event.title}</Item.Header>
-                <Item.Meta>{event.date}</Item.Meta>
-                <Item.Description>
-                    <div>{event.description}</div>
-                    <div>{event.location}, {event.venue}</div>
-                </Item.Description>
-                <Item.Extra>
-                    <Button as={Link} to={`/musicEvents/${event.id}`} floated="right" content="Show" color="blue" />
-                    <Button
-                        name={event.id}
-                        loading={loading && target === event.id}
-                        onClick={(e) => handleEventDelete(e, event.id)}
-                        floated="right"
-                        content="Remove"
-                        color="red" />
-                    <Label basic content={event.category} />
-                </Item.Extra>
-            </Item.Content>
-
-        </Item>
+        <Segment.Group>
+            <Segment>
+                <Item.Group>
+                    <Item>
+                        <Item.Image size='tiny' circular src='/assets/user.png' />
+                        <Item.Content>
+                            <Item.Header as={Link} to={`/musicEvents/${event.id}`}>
+                                {event.title}
+                            </Item.Header>
+                            <Item.Description>
+                                Event created by ilter
+                            </Item.Description>
+                        </Item.Content>
+                    </Item>
+                </Item.Group>
+            </Segment>
+            <Segment>
+                <Icon name='clock' /> {event.date}
+                <Icon name='marker' /> {event.venue}
+            </Segment>
+            <Segment secondary>
+                Participants
+                <Icon name='clock' /> {event.date}
+                <Icon name='marker' /> {event.venue}
+            </Segment>
+            <Segment clearing>
+                <span>{event.description}</span>
+                <Button as={Link} to={`/musicEvents/${event.id}`}
+                    color='teal'
+                    floated='right'
+                    content='View'
+                />
+            </Segment>
+        </Segment.Group>
         )
 }
