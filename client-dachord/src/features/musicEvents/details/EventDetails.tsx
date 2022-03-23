@@ -1,9 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {Button, Card, Image } from 'semantic-ui-react';
+import {Button, Card, Grid, Image } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
+import EventDetailedChat from './EeventDetailedChat';
+import EventDetailedHeader from './EventDetailedHeader';
+import EventDetailedInfo from './EventDetailedInfo';
+import EventDetailedSidebar from './EventDetailedSidebar';
 
 
 
@@ -22,23 +26,15 @@ export default observer( function EventDetails() {
     if (loadingInitial || !musicEvent) return <LoadingComponent />;
 
     return(
-        <Card fluid>
-            <Image src={`/assets/eventImages/${musicEvent.category.toLowerCase()}.jpg`} wrapped ui={false} />
-            <Card.Content>
-                <Card.Header>{musicEvent.title}</Card.Header>
-                <Card.Meta>
-                    <span>{musicEvent.date}</span>
-                </Card.Meta>
-                <Card.Description>
-                    {musicEvent.description}
-                </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-                <Button.Group widths='2'>
-                    <Button as={Link} to={`/manage/${musicEvent.id}`} basic color='blue' content='Edit'></Button>
-                    <Button as={Link} to={"/musicEvents"} basic color='grey' content='Cancel'></Button>
-                </Button.Group>
-            </Card.Content>
-        </Card>
+        <Grid>
+            <Grid.Column width={10}>
+                <EventDetailedHeader />
+                <EventDetailedInfo />
+                <EventDetailedChat />
+            </Grid.Column>
+            <Grid.Column width={6}>
+                <EventDetailedSidebar/>
+            </Grid.Column>
+        </Grid>
     )
 })
