@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Container } from 'semantic-ui-react';
 import HomePage from '../../features/home/HomePage';
 import EventDetails from '../../features/musicEvents/details/EventDetails';
-import EventDashboard from '../../features/musicEvents/EventDashboard';
+import EventDashboard from '../../features/musicEvents/dashboard/EventDashboard';
 import EventForm from '../../features/musicEvents/form/EventForm';
 
 import NavBar from './NavBar';
