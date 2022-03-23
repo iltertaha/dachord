@@ -27,14 +27,15 @@ export default observer( function EventDetails() {
 
     return(
         <Grid>
+            <Grid.Column width={6}>
+                <EventDetailedSidebar />
+            </Grid.Column>
             <Grid.Column width={10}>
                 <EventDetailedHeader event={musicEvent} />
                 <EventDetailedInfo event={musicEvent} />
                 <EventDetailedChat />
             </Grid.Column>
-            <Grid.Column width={6}>
-                <EventDetailedSidebar/>
-            </Grid.Column>
+            
         </Grid>
     )
 })
