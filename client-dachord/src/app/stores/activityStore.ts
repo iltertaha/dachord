@@ -23,6 +23,16 @@ export default class ActivityStore {
         })
     }
 
+    get groupedActivities() {
+        return Object.entries(
+            this.activitiesByDate.reduce((musicEvents, event) => {
+                const date = event.date;
+                musicEvents[date] = musicEvents[date] ? [...musicEvents[date], event] : [event];
+                return musicEvents;
+            }, {} as {[key: string]: Activity[] })
+        )
+    }
+
     private getMusicEvent = (id: string) => {
         return this.musicEventsRegistry.get(id);
     }
