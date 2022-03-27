@@ -1,8 +1,6 @@
-import React, { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react'
+import { Button, Icon, Item, Segment } from 'semantic-ui-react'
 import { Activity } from '../../../app/models/activity'
-import { useStore } from '../../../app/stores/store';
 
 
 interface Props {
@@ -11,17 +9,6 @@ interface Props {
 }
 
 export default function EventListItem({ event }: Props) {
-    const { activityStore } = useStore();
-    const { deleteEvent, loading } = activityStore;
-
-
-    const [target, setTarget] = useState('');
-
-    function handleEventDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
-        setTarget(e.currentTarget.name);
-        deleteEvent(id);
-    }
-
     return (
         <Segment.Group>
             <Segment>

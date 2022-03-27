@@ -24,6 +24,8 @@ export default observer( function EventDashboard() {
 
         // notice empty dependency [] to avoid endless loop
         // runs only one time
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [musicEventsRegistry.size, loadActivities])
 
 
