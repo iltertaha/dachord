@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.core;
+using Domain;
 using FluentValidation;
 using MediatR;
 using Persistence;
@@ -7,7 +8,7 @@ namespace Application.MusicEvents
 {
     public class Create
     {
-        public class Command: IRequest
+        public class Command: IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
         }
@@ -20,7 +21,7 @@ namespace Application.MusicEvents
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command,Result<Unit>>
         {
             private readonly DataContext context;
 
@@ -29,13 +30,17 @@ namespace Application.MusicEvents
                 this.context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 this.context.Activities.Add(request.Activity);
 
-                await this.context.SaveChangesAsync();
-
-                return Unit.Value;
+                // result zero means nothing is written to db
+                var result = await this.context.SaveChangesAsync() > 0;
+                if (!result)
+                {
+                    return Result<Unit>.Failure("Failed to create music event.")
+                }
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }
