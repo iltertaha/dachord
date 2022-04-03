@@ -38,7 +38,7 @@ namespace Application.MusicEvents
                 var result = await this.context.SaveChangesAsync() > 0;
                 if (!result)
                 {
-                    return Result<Unit>.Failure("Failed to create music event.")
+                    return Result<Unit>.Failure("Failed to create music event.");
                 }
                 return Result<Unit>.Success(Unit.Value);
             }
