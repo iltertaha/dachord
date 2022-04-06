@@ -18,7 +18,17 @@ function App() {
 
   return (
       <>
-          <ToastContainer position='bottom-right' hideProgressBar />
+          <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+          />
           <Route exact path='/' component={HomePage} />
           <Route
               path={'/(.+)'}
