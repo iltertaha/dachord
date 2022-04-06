@@ -17,6 +17,7 @@ export default function NavBar() {
                     D'achord
                 </Menu.Item>
                 <Menu.Item as={ NavLink} to='/musicEvents' name="Latest Music Events" />
+                <Menu.Item as={ NavLink} to='/errors' name="Errors" />
                 <Menu.Item>
                     <Button as={NavLink} to='/createEvent' positive content="Create Music Event" />
                 </Menu.Item>

@@ -25,14 +25,15 @@ namespace Application.MusicEvents
                 this.context = context;
             }
 
-            public async Task<Result<Unit>?> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var activity = await this.context.Activities.FindAsync(request.Id);
                 
-                if(activity == null)
-                {
-                    return null;
-                }
+                // if(activity == null)
+                // {
+                //     return null;
+                // }
+
                 // handle exception if record does not exists
                 this.context.Remove(activity);
 

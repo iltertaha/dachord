@@ -8,6 +8,8 @@ import EventDashboard from '../../features/musicEvents/dashboard/EventDashboard'
 import EventForm from '../../features/musicEvents/form/EventForm';
 
 import NavBar from './NavBar';
+import TestErrors from '../../features/errors/TestError';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
     const location = useLocation();
@@ -16,6 +18,7 @@ function App() {
 
   return (
       <>
+          <ToastContainer position='bottom-right' hideProgressBar />
           <Route exact path='/' component={HomePage} />
           <Route
               path={'/(.+)'}
@@ -26,6 +29,7 @@ function App() {
                       <Route exact path='/musicEvents' component={EventDashboard} />
                       <Route path='/musicEvents/:id' component={EventDetails} />
                       <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
+                      <Route path='/errors' component={TestErrors} />
                   </Container>
               </>)}
           />
