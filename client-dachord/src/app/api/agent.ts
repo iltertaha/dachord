@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { Activity } from '../models/activity';
+import { history } from '../../index';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -39,7 +40,8 @@ axios.interceptors.response.use(async response => {
             });
             break;
         case 404:
-            toast.error('not found', {
+            history.push('not-found');
+            /*toast.error('not found', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -47,7 +49,7 @@ axios.interceptors.response.use(async response => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-            });
+            });*/
             break;
         case 500:
             toast.error('server error', { theme: "colored" });

@@ -6,8 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';
-import { BrowserRouter } from 'react-router-dom';
+import { Router  } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
+import { createBrowserHistory } from 'history';
+
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   /*Commented strictmode to overcome 
@@ -15,9 +19,9 @@ ReactDOM.render(
 
     /*<React.StrictMode>*/
     <StoreContext.Provider value={store}>
-        <BrowserRouter>
+        <Router history={history}>
             <App />
-        </BrowserRouter>
+        </Router>
         
     </StoreContext.Provider>
     
