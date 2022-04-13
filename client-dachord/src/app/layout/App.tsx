@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Route, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Container } from 'semantic-ui-react';
 import HomePage from '../../features/home/HomePage';
@@ -10,6 +10,7 @@ import EventForm from '../../features/musicEvents/form/EventForm';
 import NavBar from './NavBar';
 import TestErrors from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
+import NotFound from '../../features/errors/NotFound';
 
 function App() {
     const location = useLocation();
@@ -35,11 +36,14 @@ function App() {
               render={() => (<>
                   <NavBar />
                   <Container style={{ marginTop: '7em' }}>
-
-                      <Route exact path='/musicEvents' component={EventDashboard} />
-                      <Route path='/musicEvents/:id' component={EventDetails} />
-                      <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
-                      <Route path='/errors' component={TestErrors} />
+                      <Switch>
+                          <Route exact path='/musicEvents' component={EventDashboard} />
+                          <Route path='/musicEvents/:id' component={EventDetails} />
+                          <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
+                          <Route path='/errors' component={TestErrors} />
+                          <Route component={NotFound} />
+                      </Switch>
+                      
                   </Container>
               </>)}
           />
