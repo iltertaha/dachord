@@ -16,9 +16,16 @@ axios.interceptors.response.use(async response => {
     await sleep(1000);
     return response;
 }, (error: AxiosError) => {
-    const { data, status } = error.response!;
+    const { data, status, config } = error.response!;
     switch (status) {
         case 400:
+            if (typeof data === 'string') {
+                toast.error(data);
+            }
+            if (config.method === 'get'
+                && data.errors.hasOwnProperty('id')) {
+                history.push('/not-found');
+            }
             if (data.errors) {
                 const modalStateErrors = [];
                 for (const key in data.errors) {
@@ -28,17 +35,7 @@ axios.interceptors.response.use(async response => {
                 }
                 throw modalStateErrors.flat();
             }
-            else {
-                toast.error(data, {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            
             
             break;
         case 401:
