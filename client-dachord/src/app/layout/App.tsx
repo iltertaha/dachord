@@ -11,6 +11,7 @@ import NavBar from './NavBar';
 import TestErrors from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
+import ServerError from '../../features/errors/ServerError';
 
 function App() {
     const location = useLocation();
@@ -41,6 +42,7 @@ function App() {
                           <Route path='/musicEvents/:id' component={EventDetails} />
                           <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
                           <Route path='/errors' component={TestErrors} />
+                          <Route path='/server-error' component={ServerError} />
                           <Route component={NotFound} />
                       </Switch>
                       

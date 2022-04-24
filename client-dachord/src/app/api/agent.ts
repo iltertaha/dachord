@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { Activity } from '../models/activity';
 import { history } from '../../index';
+import { store } from '../stores/store';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -64,7 +65,9 @@ axios.interceptors.response.use(async response => {
             });*/
             break;
         case 500:
-            toast.error('server error', { theme: "colored" });
+            store.commonStore.setServerError(data);
+            history.push('/server-error');
+            // toast.error('server error', { theme: "colored" });
             break;
     }
     return Promise.reject(error);
