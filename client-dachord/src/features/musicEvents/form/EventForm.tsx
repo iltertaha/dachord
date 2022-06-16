@@ -7,6 +7,7 @@ import {Button, Form, Segment } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
+import { Formik } from 'formik';
 
 export default observer( function EventForm(){
     const history = useHistory();
@@ -30,7 +31,7 @@ export default observer( function EventForm(){
 
     
 
-    function handleSubmit() {
+    /*function handleSubmit() {
         if (event.id.length === 0) {
             let newEvent = {
                 ...event,
@@ -50,24 +51,30 @@ export default observer( function EventForm(){
     function handleInputChange(e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
         const {name, value} = e.target;
         setEvent({...event, [name] : value})
-    }
+    }*/
 
     if (loadingInitial) return <LoadingComponent content='Loading Music Event...'/>
 
 
     return(
         <Segment clearing>
-            <Form onSubmit={handleSubmit} autoComplete="off">
-                <Form.Input placeholder = 'Title' value={event.title} name="title" onChange={handleInputChange}/>
-                <Form.TextArea placeholder = 'Description' value={event.description} name="description" onChange={handleInputChange}/>
-                <Form.Input placeholder = 'Category' value={event.category} name="category" onChange={handleInputChange}/>
-                <Form.Input type='date' placeholder = 'Date' value={event.date} name="date" onChange={handleInputChange} />
-                <Form.Input placeholder = 'Location'  value={event.location} name="location" onChange={handleInputChange}/>
-                <Form.Input placeholder = 'Venue' value={event.venue} name="venue" onChange={handleInputChange} />
-                <Button loading={loading} floated='right' positive type='submit' content='Submit'/>
-                <Button as={ Link} to='/musicEvents' floated='right' type='button' content='Cancel'/>
+            <Formik enableReinitialize initialValues={event} onSubmit={values => console.log(values)}>
+                {({ values: event, handleChange, handleSubmit }) => (
+                    <Form onSubmit={handleSubmit} autoComplete="off">
+                        <Form.Input placeholder='Title' value={event.title} name="title" onChange={handleChange} />
+                        <Form.TextArea placeholder='Description' value={event.description} name="description" onChange={handleChange} />
+                        <Form.Input placeholder='Category' value={event.category} name="category" onChange={handleChange} />
+                        <Form.Input type='date' placeholder='Date' value={event.date} name="date" onChange={handleChange} />
+                        <Form.Input placeholder='Location' value={event.location} name="location" onChange={handleChange} />
+                        <Form.Input placeholder='Venue' value={event.venue} name="venue" onChange={handleChange} />
+                        <Button loading={loading} floated='right' positive type='submit' content='Submit' />
+                        <Button as={Link} to='/musicEvents' floated='right' type='button' content='Cancel' />
 
-            </Form>
+                    </Form>
+                    
+                    )}
+            </Formik>
+            
         </Segment>
     )
 })
