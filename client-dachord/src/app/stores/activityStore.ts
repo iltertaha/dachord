@@ -9,7 +9,7 @@ export default class ActivityStore {
     selectedEvent: Activity | undefined = undefined;
     isEditable = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 
     constructor() {
         // infer types whether action(method)
