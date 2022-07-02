@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
 import { Activity } from "../../../app/models/activity";
+import { format } from "date-fns";
 
 const activityImageStyle = {
     filter: 'brightness(30%)'
@@ -35,7 +36,7 @@ export default observer(function EventDetailedHeader({ event }: Props) {
                                     content={event.title}
                                     style={{ color: 'white' }}
                                 />
-                                <p>{event.date}</p>
+                                <p>{format(event.date!, 'dd MMM yyyy')}</p>
                                 <p>
                                     Hosted by <strong>ilter</strong>
                                 </p>
