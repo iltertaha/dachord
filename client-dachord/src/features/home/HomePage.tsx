@@ -11,7 +11,7 @@ export default function HomePage() {
                     Dachord
                 </Header>
                 <Header as='h2' inverted content="Welcome to D'achord!" />
-                <Button as={Link} to='/musicEvents' size='huge' inverted> Take me to the musical events</Button>
+                <Button as={Link} to='/login' size='huge' inverted> Login</Button>
             </Container>
         </Segment>
         )
