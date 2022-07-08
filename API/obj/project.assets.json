@@ -2230,34 +2230,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ilter\\.nuget\\packages\\": {}
+    "/Users/iltertaha/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ilter\\IdeaProjects\\dachord\\API\\API.csproj",
+      "projectUniqueName": "/Users/iltertaha/Documents/projects/dachord/API/API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\ilter\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\API\\obj\\",
+      "projectPath": "/Users/iltertaha/Documents/projects/dachord/API/API.csproj",
+      "packagesPath": "/Users/iltertaha/.nuget/packages/",
+      "outputPath": "/Users/iltertaha/Documents/projects/dachord/API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ilter\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/iltertaha/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj": {
-              "projectPath": "C:\\Users\\ilter\\IdeaProjects\\dachord\\Application\\Application.csproj"
+            "/Users/iltertaha/Documents/projects/dachord/Application/Application.csproj": {
+              "projectPath": "/Users/iltertaha/Documents/projects/dachord/Application/Application.csproj"
             }
           }
         }
@@ -2321,7 +2319,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.201/RuntimeIdentifierGraph.json"
       }
     }
   }
