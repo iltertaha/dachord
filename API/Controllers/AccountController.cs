@@ -1,4 +1,5 @@
-﻿using API.DTOs;
+﻿using System.Security.Claims;
+using API.DTOs;
 using API.Services;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -68,15 +69,29 @@ namespace API.Controllers
             var result = await userManager.CreateAsync(user, registerDto.Password);
 
             if(result.Succeeded){
-                return new UserDto{
+                return CreateUserObject(user);
+            }
+
+            return BadRequest("Problem occured while registering user");
+        }
+
+        // Overwrite anonymous 
+        // Explicit auth needed for this endpoint
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetCurrentUser(){
+            var user = await userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+
+            return CreateUserObject(user);
+        }
+
+        private UserDto CreateUserObject(AppUser user){
+             return new UserDto{
                     DisplayName = user.DisplayName,
                     Image = null,
                     Token = tokenService.CreateToken(user),
                     UserName = user.UserName
                 };
-            }
-
-            return BadRequest("Problem occured while registering user");
         }
     }
 }
