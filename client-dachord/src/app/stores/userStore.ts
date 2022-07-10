@@ -22,7 +22,7 @@ export default class UserStore{
              store.commonStore.setToken(user.token);
              runInAction(() => this.user = user);
              history.push('/activities');
-             this.user = user;
+             store.modalStore.closeModal();
             console.log(user);
         }catch(error){
             throw error;
@@ -34,5 +34,15 @@ export default class UserStore{
         window.localStorage.removeItem('jwt');
         this.user = null;
         history.push('/');
+    }
+
+    getUser = async () => {
+        try{
+            const user = await agent.Account.current();
+            runInAction(() =>   this.user = user);
+        }
+        catch(error){
+            console.log(error);
+        }
     }
 }
