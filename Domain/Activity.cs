@@ -13,6 +13,8 @@ namespace Domain
         public string Location { get; set; }
         public string Venue { get; set; }
 
+        public ICollection<AppUser> Attendees{get; set;}
+
 
     }
 }
