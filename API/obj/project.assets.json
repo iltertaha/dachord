@@ -849,6 +849,19 @@
           "bin/placeholder/Domain.dll": {}
         }
       },
+      "Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Infrastructure.dll": {}
+        }
+      },
       "Persistence/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2211,6 +2224,11 @@
       "path": "../Domain/Domain.csproj",
       "msbuildProject": "../Domain/Domain.csproj"
     },
+    "Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/Infrastructure.csproj"
+    },
     "Persistence/1.0.0": {
       "type": "project",
       "path": "../Persistence/Persistence.csproj",
@@ -2221,6 +2239,7 @@
     "net6.0": [
       "Application >= 1.0.0",
       "FluentValidation.AspNetCore >= 10.4.0",
+      "Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.6",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.0",
       "Microsoft.EntityFrameworkCore.Sqlite >= 6.0.0",
@@ -2256,6 +2275,9 @@
           "projectReferences": {
             "/Users/iltertaha/Documents/projects/dachord/Application/Application.csproj": {
               "projectPath": "/Users/iltertaha/Documents/projects/dachord/Application/Application.csproj"
+            },
+            "/Users/iltertaha/Documents/projects/dachord/Infrastructure/Infrastructure.csproj": {
+              "projectPath": "/Users/iltertaha/Documents/projects/dachord/Infrastructure/Infrastructure.csproj"
             }
           }
         }
