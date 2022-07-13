@@ -1,5 +1,6 @@
 ﻿using Application.core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -48,14 +49,10 @@ namespace Application.MusicEvents
                 }*/
 
                 var activities = await _context.Activities
-                                    .Include(a => a.Attendees)
-                                    .ThenInclude(u => u.AppUser)
+                                    .ProjectTo<MusicEventDto>( mapper.ConfigurationProvider)
                                     .ToListAsync(cancellationToken);
 
-                var activities2Return = mapper.Map<List<MusicEventDto>>(activities);
-                
-
-                return Result<List<MusicEventDto>>.Success(activities2Return);
+                return Result<List<MusicEventDto>>.Success(activities);
 
             }
         }
