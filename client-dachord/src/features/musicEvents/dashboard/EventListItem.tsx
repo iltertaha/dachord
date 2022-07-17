@@ -32,8 +32,6 @@ export default function EventListItem({ event }: Props) {
             </Segment>
             <Segment secondary>
                 Participants
-                <Icon name='clock' /> {event.date}
-                <Icon name='marker' /> {event.venue}
             </Segment>
             <Segment clearing>
                 <span>{event.description}</span>
