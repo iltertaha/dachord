@@ -2,6 +2,8 @@ using API.Extensions;
 using API.Middleware;
 using Application.MusicEvents;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace API
 {
@@ -20,7 +22,12 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers()
+            services.AddControllers(opt =>
+            {
+                // Every single endpoint in our API requires authentication unless we explicitly state otherwise.
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            })
                     .AddFluentValidation(config =>
                     {   // where our validators are coming from
                         config.RegisterValidatorsFromAssemblyContaining<Create>();
