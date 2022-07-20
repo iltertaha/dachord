@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -38,14 +39,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return new UserDto
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = tokenService.CreateToken(user),
-                    UserName = user.UserName,
-
-                };
+                return CreateUserObject(user);
             }
             return Unauthorized();
         }
@@ -70,22 +64,35 @@ namespace API.Controllers
             };
 
             var result = await userManager.CreateAsync(user, registerDto.Password);
-            
-            if(result.Succeeded)
-            {
-                return new UserDto
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = tokenService.CreateToken(user),
-                    UserName = user.UserName
-                };
 
-               
+            if (result.Succeeded)
+            {
+                return CreateUserObject(user);
             }
 
-            return BadRequest("Problem while registering user.");
+            return BadRequest("Problem occured while registering user");
 
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var user = await userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+
+            return CreateUserObject(user);
+        }
+
+
+        private UserDto CreateUserObject(AppUser user)
+        {
+            return new UserDto
+            {
+                DisplayName = user.DisplayName,
+                Image = null,
+                Token = tokenService.CreateToken(user),
+                UserName = user.UserName
+            };
         }
     }
 }
