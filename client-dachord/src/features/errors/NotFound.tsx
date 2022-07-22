@@ -16,8 +16,8 @@ export default function NotFound() {
             <div><Image src={notFoundGif} size='medium' centered style={{"padding": "14px"}} /></div>
             
             <Segment.Inline>
-                <Button as={Link} to="/activities" primary>
-                    Return to Music Events page!
+                <Button as={Link} to="/musicEvents" primary>
+                    Take me to home!
                 </Button>
                 </Segment.Inline>
         </Segment>
