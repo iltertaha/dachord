@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
 
-    [AllowAnonymous]
     public class ActivitiesController : BaseApiController
     {
         private readonly IMediator mediator;
@@ -34,6 +33,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command { Activity = activity }));
         }
 
+        [Authorize(Policy = "IsEventHost")]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditActivity(Guid id, Activity activity)
         {
@@ -44,6 +44,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize(Policy = "IsEventHost")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(Guid id)
         {
@@ -51,6 +52,13 @@ namespace API.Controllers
 
 
 
+        }
+
+
+        [HttpPost("{id}/join")]
+        public async Task<IActionResult> Attend(Guid id)
+        {
+                return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
     }
 }

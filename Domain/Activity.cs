@@ -13,6 +13,10 @@ namespace Domain
         public string Location { get; set; }
         public string Venue { get; set; }
 
+        public bool IsCancelled { get; set; }
+
+        public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+
 
     }
 }

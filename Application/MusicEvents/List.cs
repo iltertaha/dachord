@@ -1,4 +1,6 @@
 ﻿using Application.core;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,36 +16,30 @@ namespace Application.MusicEvents
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Activity>>> { }
+        public class Query : IRequest<Result<List<ActivityDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<Activity>>>
+        public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
         {
             private readonly DataContext _context;
             private readonly ILogger<List> _logger;
+            private readonly IMapper mapper;
 
-            public Handler(DataContext context, ILogger<List> logger)
+            public Handler(DataContext context, ILogger<List> logger, IMapper mapper)
             {
                 this._context = context;
                 this._logger = logger;
+                this.mapper = mapper;
             }
 
-            public async Task<Result<List<Activity>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                /*try
-                {
-                    for(var i  = 0; i < 10; i++)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        await Task.Delay(1000,cancellationToken);
-                        _logger.LogInformation($"Task {i} has completed");
 
-                    }
-                }
-                catch(Exception ex) when(ex is TaskCanceledException)
-                {
-                    _logger.LogInformation("Task was cancelled");
-                }*/
-                return Result<List<Activity>>.Success(await _context.Activities.ToListAsync(cancellationToken));
+                var activities = await _context.Activities
+                    .ProjectTo<ActivityDto>(mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+
+                return Result<List<ActivityDto>>.Success(activities);
 
             }
         }
