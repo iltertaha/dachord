@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button, Icon, Item, Segment } from 'semantic-ui-react'
+import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react'
 import { Activity } from '../../../app/models/activity'
 import { format } from 'date-fns';
 import EventListItemAttendee from './EventListItemAttendee';
@@ -13,16 +13,33 @@ export default function EventListItem({ event }: Props) {
     return (
         <Segment.Group>
             <Segment>
+                {event.isCancelled && 
+                    <Label attached='top' color='red' content='Cancelled' style={{textAlign: 'center'}}/>
+                }
                 <Item.Group>
                     <Item>
-                        <Item.Image size='tiny' circular src='/assets/user.png' />
+                        <Item.Image style={{marginBottom:3 }} size='tiny' circular src='/assets/user.png' />
                         <Item.Content>
                             <Item.Header as={Link} to={`/musicEvents/${event.id}`}>
                                 {event.title}
                             </Item.Header>
                             <Item.Description>
-                                Event created by ilter
+                                Event created by {event.host?.displayName}
                             </Item.Description>
+                            {event.isHost && (
+                                <Item.Description>
+                                    <Label basic color='blue'>
+                                        You are hosting this event.
+                                    </Label>
+                                </Item.Description>
+                            )}
+                            {event.isGoing && !event.isHost && (
+                                <Item.Description>
+                                    <Label basic color='olive'>
+                                        You are going to this event.
+                                    </Label>
+                                </Item.Description>
+                            )}
                         </Item.Content>
                     </Item>
                 </Item.Group>
@@ -32,7 +49,7 @@ export default function EventListItem({ event }: Props) {
                 <Icon name='marker' /> {event.venue}
             </Segment>
             <Segment secondary>
-                <EventListItemAttendee/>
+                <EventListItemAttendee attendees={event.attendees!} />
             </Segment>
             <Segment clearing>
                 <span>{event.description}</span>

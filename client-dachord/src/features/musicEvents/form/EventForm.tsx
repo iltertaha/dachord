@@ -15,24 +15,16 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Activity } from '../../../app/models/activity';
+import { ActivityFormValues } from '../../../app/models/activity';
 
 
 export default observer( function EventForm(){
     const history = useHistory();
     const { activityStore } = useStore();
-    const { createEvent, updateEvent, loading, loadActivity, loadingInitial } = activityStore;
+    const { createEvent, updateEvent, loadActivity, loadingInitial } = activityStore;
     const { id } = useParams<{ id: string }>();
 
-    const [event, setEvent] = useState <Activity>({
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: null,
-        location: '',
-        venue: ''
-    });
+    const [event, setEvent] = useState<ActivityFormValues>(new ActivityFormValues());
 
     
 
@@ -46,13 +38,13 @@ export default observer( function EventForm(){
     })
 
     useEffect(() => {
-        if (id) loadActivity(id).then(event => setEvent(event!))
+        if (id) loadActivity(id).then(event => setEvent(new ActivityFormValues(event)))
     }, [id, loadActivity])
 
     
 
-    function handleFormSubmit(event: Activity) {
-        if (event.id.length === 0) {
+    function handleFormSubmit(event: ActivityFormValues) {
+        if (!event.id) {
             let newEvent = {
                 ...event,
                 id: uuid()
@@ -98,7 +90,7 @@ export default observer( function EventForm(){
                         <MyTextInput placeholder='Venue' name="venue"  />
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
-                            loading={loading}
+                            loading={isSubmitting}
                             floated='right'
                             positive
                             type='submit'

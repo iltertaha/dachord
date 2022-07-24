@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
+import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react'
 import { Activity } from "../../../app/models/activity";
 import { format } from "date-fns";
+import { useStore } from '../../../app/stores/store';
 
 const activityImageStyle = {
     filter: 'brightness(30%)'
@@ -23,9 +24,15 @@ interface Props {
 }
 
 export default observer(function EventDetailedHeader({ event }: Props) {
+
+    const { activityStore: { updateAttendance, loading, cancelEventToggle    } } = useStore();
+
     return (
         <Segment.Group>
             <Segment basic attached='top' style={{ padding: '0' }}>
+                {event.isCancelled &&
+                    <Label style={{position: 'absolute', zIndex: 1000, left: -14, top: 20}} ribbon color='red' content='Cancelled'
+/>}
                 <Image src={`/assets/eventImages/${event.category.toLowerCase()}.jpg`} fluid style={activityImageStyle} />
                 <Segment style={activityImageTextStyle} basic>
                     <Item.Group>
@@ -38,7 +45,11 @@ export default observer(function EventDetailedHeader({ event }: Props) {
                                 />
                                 <p>{format(event.date!, 'dd MMM yyyy')}</p>
                                 <p>
-                                    Hosted by <strong>ilter</strong>
+                                    Hosted by <strong>
+                                        <Link to={`/profiles/${event.host?.username}`}>
+                                        {event.host?.displayName}
+                                        </Link>
+                                        </strong>
                                 </p>
                             </Item.Content>
                         </Item>
@@ -46,11 +57,33 @@ export default observer(function EventDetailedHeader({ event }: Props) {
                 </Segment>
             </Segment>
             <Segment clearing attached='bottom'>
-                <Button color='teal'>Join Music Event</Button>
-                <Button>Cancel attendance</Button>
-                <Button as={Link} to={`/manage/${event.id}`} color='orange' floated='right'>
-                    Manage Event
-                </Button>
+                {event.isHost ? (
+                    <>
+                        <Button
+                            color={event.isCancelled ? 'green' : 'red'}
+                            floated='left'
+                            basic
+                            content={event.isCancelled ? 'Re-create Event' : 'Cancel Event'}
+                            onClick={cancelEventToggle}
+                            loading={loading}
+                        />
+                        <Button as={Link}
+                            disabled={event.isCancelled}
+                            to={`/manage/${event.id}`} color='orange' floated='right'>
+                            Manage Event
+                        </Button>   
+                    </>
+                    
+                )
+                    : event.isGoing ? (
+                        <Button loading={loading} onClick={updateAttendance}>Cancel attendance</Button>)
+
+                        : (<Button disabled={event.isCancelled} loading={loading} onClick={updateAttendance} color='teal'>Join Music Event</Button>)
+                        
+                }
+                
+                
+                
             </Segment>
         </Segment.Group>
     )

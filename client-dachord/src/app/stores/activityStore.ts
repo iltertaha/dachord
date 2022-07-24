@@ -1,7 +1,9 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { Activity } from "../models/activity";
+import { Activity, ActivityFormValues } from "../models/activity";
 import { format } from "date-fns";
+import { store } from "./store";
+import { Profile } from "../models/profile";
 
 
 export default class ActivityStore {
@@ -39,6 +41,15 @@ export default class ActivityStore {
     }
 
     private setMusicEvent = (event: Activity) => {
+        const user = store.userStore.user;
+        if (user) {
+            event.isGoing = event.attendees!.some(
+                a => a.username === user.username
+            )
+            event.isHost = event.hostUsername === user.username;
+            event.host = event.attendees?.find(x => x.username === event.hostUsername);
+
+        }
         event.date = new Date(event.date!);
         this.musicEventsRegistry.set(event.id, event);
     }
@@ -94,42 +105,45 @@ export default class ActivityStore {
     }
 
 
-    createEvent = async (musicEvent: Activity) => {
-        this.loading = true;
+    createEvent = async (musicEvent: ActivityFormValues) => {
+
+        const user = store.userStore.user;
+        const attendee = new Profile(user!);
+
         try {
             await agent.MusicEvents.create(musicEvent);
-            runInAction(() => {
-                this.musicEventsRegistry.set(musicEvent.id,musicEvent);
-                this.selectedEvent = musicEvent;
-                this.isEditable = false;
-                this.loading = false;
+            const newEvent = new Activity(musicEvent);
+            newEvent.hostUsername = user!.username;
+            newEvent.attendees = [attendee];
+            this.setMusicEvent(newEvent);
 
+            runInAction(() => {
+                this.selectedEvent = newEvent;
             })
 
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
+           
             
         }
     }
 
-    updateEvent = async (musicEvent: Activity) => {
-        this.loading = true;
+    updateEvent = async (musicEvent: ActivityFormValues) => {
+        
         try {
             await agent.MusicEvents.update(musicEvent);
             runInAction(() => {
-                this.musicEventsRegistry.set(musicEvent.id, musicEvent);
-                this.selectedEvent = musicEvent;
-                this.isEditable = false;
-                this.loading = false;
+                if (musicEvent.id) {
+                    let updatedEvent = { ...this.getMusicEvent(musicEvent.id), ...musicEvent }
+                    this.musicEventsRegistry.set(musicEvent.id, updatedEvent as Activity);
+                    this.selectedEvent = updatedEvent as Activity;
+                }
+                
+                
             })
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
+            
         }
 
     }
@@ -149,6 +163,57 @@ export default class ActivityStore {
                 this.loading = false;
             })
         }
+    }
+
+    updateAttendance = async () => {
+        const user = store.userStore.user;
+        this.loading = true;
+        try {
+            await agent.MusicEvents.join(this.selectedEvent!.id);
+            runInAction(() => {
+                if (this.selectedEvent?.isGoing) {
+                    this.selectedEvent.attendees = this.selectedEvent.attendees?.filter(
+                        a => a.username !== user?.username
+                    );
+                    this.selectedEvent.isGoing = false;
+                }
+                else {
+                    const attendee = new Profile(user!);
+                    this.selectedEvent?.attendees?.push(attendee);
+                    this.selectedEvent!.isGoing = true;
+                   
+                }
+
+                this.musicEventsRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            // Always turn off loading when finished
+            runInAction(() => this.loading = false);
+        }
+    }
+
+
+    cancelEventToggle = async () => {
+        this.loading = true;
+        try {
+            await agent.MusicEvents.join(this.selectedEvent!.id);
+            runInAction(() => {
+                this.selectedEvent!.isCancelled = !this.selectedEvent?.isCancelled;
+                this.musicEventsRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+            })
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => {
+                this.loading = false;
+            });
+        }
+
+
+
     }
 
 }

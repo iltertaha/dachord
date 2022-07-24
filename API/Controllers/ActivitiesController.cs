@@ -56,7 +56,7 @@ namespace API.Controllers
 
 
         [HttpPost("{id}/join")]
-        public async Task<IActionResult> Attend(Guid id)
+        public async Task<IActionResult> Join(Guid id)
         {
                 return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
