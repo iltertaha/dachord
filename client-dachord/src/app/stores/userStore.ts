@@ -8,7 +8,7 @@ export default class UserStore {
     user: User | null = null;
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 
     get isLoggedIn() {

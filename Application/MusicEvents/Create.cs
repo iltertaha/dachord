@@ -36,8 +36,8 @@ namespace Application.MusicEvents
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await context.Users.FirstOrDefaultAsync(
-                    x => x.UserName == userAccessor.GetUserName());
+                var user = await this.context.Users.FirstOrDefaultAsync(
+                    x => x.UserName == userAccessor.GetUsername());
 
                 var attendee = new ActivityAttendee
                 {

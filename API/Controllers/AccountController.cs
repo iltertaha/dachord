@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace API.Controllers
 {
-    [AllowAnonymous] // Bypass auth
+     // Bypass auth
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -27,6 +27,7 @@ namespace API.Controllers
             this.tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -44,6 +45,7 @@ namespace API.Controllers
             return Unauthorized();
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -84,7 +86,6 @@ namespace API.Controllers
 
             return CreateUserObject(user);
         }
-
 
         private UserDto CreateUserObject(AppUser user)
         {

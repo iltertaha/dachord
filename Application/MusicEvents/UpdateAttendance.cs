@@ -41,7 +41,7 @@ namespace Application.MusicEvents
 
                 var user = await context.Users
                     .FirstOrDefaultAsync(
-                        x => x.UserName == userAccessor.GetUserName());
+                        x => x.UserName == userAccessor.GetUsername());
 
                 if(user == null) { return null; }
 

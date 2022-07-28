@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
+      
     public class ActivitiesController : BaseApiController
     {
         private readonly IMediator mediator;
 
         
-
+        
         [HttpGet]
-        public async Task<IActionResult> GetActivities(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetActivities()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
 
@@ -28,7 +28,7 @@ namespace API.Controllers
         } 
         
         [HttpPost]
-        public async Task<IActionResult> CreateActivity([FromBody]Activity activity)
+        public async Task<IActionResult> CreateActivity(Activity activity)
         {
             return HandleResult(await Mediator.Send(new Create.Command { Activity = activity }));
         }

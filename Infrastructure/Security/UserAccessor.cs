@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Security
 {
@@ -18,9 +13,9 @@ namespace Infrastructure.Security
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetUserName()
+        public string GetUsername()
         {
-            return httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.Name);
+            return httpContextAccessor.HttpContext.User.Identity.Name;//.FindFirstValue(ClaimTypes.Name);
 
         }
     }

@@ -4,6 +4,7 @@ using Application.MusicEvents;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace API
 {
@@ -55,6 +56,7 @@ namespace API
 
             app.UseCors("CorsPolicy");
 
+            
             // First authenticate
             app.UseAuthentication();
             // Then get authorization
