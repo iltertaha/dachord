@@ -274,6 +274,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.19.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
