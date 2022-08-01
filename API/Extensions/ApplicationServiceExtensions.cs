@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Application.Interfaces;
 using Application.MusicEvents;
+using Application.Photos;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
@@ -34,6 +35,7 @@ namespace API.Extensions
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinaryConfigs>(config.GetSection("Cloudinary"));
 
             return services;
