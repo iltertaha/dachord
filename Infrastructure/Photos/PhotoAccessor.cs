@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Photos;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Photos
+namespace Infrastructure.Photos
 {
     public class PhotoAccessor : IPhotoAccessor
     {

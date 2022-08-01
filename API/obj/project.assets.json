@@ -883,6 +883,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
+          "CloudinaryDotNet": "1.19.0",
           "Domain": "1.0.0",
           "FluentValidation": "10.4.0",
           "FluentValidation.AspNetCore": "10.4.0",
