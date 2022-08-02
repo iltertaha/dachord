@@ -19,5 +19,11 @@ namespace API.Controllers
                 Id = id
             }));
         }
+
+        [HttpPost("{id}/setMainPhoto")]
+        public async Task<IActionResult> SetMainPhoto(string id)
+        {
+            return HandleResult(await Mediator.Send(new SetAsMainPhoto.Command { Id = id }));
+        }
     }
 }
