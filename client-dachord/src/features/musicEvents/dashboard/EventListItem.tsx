@@ -18,13 +18,13 @@ export default function EventListItem({ event }: Props) {
                 }
                 <Item.Group>
                     <Item>
-                        <Item.Image style={{marginBottom:3 }} size='tiny' circular src='/assets/user.png' />
+                        <Item.Image style={{ marginBottom: 3 }} size='tiny' circular src={event.host?.image || '/assets/user.png' } />
                         <Item.Content>
                             <Item.Header as={Link} to={`/musicEvents/${event.id}`}>
                                 {event.title}
                             </Item.Header>
                             <Item.Description>
-                                Event created by {event.host?.displayName}
+                                Event created by <Link to={`/profiles/${event.hostUsername}`}>{event.host?.displayName}</Link>
                             </Item.Description>
                             {event.isHost && (
                                 <Item.Description>

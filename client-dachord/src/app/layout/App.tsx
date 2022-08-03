@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import LoginForm from '../../features/users/LoginForm';
+import ProfilePage from '../../features/profiles/ProfilePage';
 
 function App() {
     const location = useLocation();
@@ -59,6 +60,7 @@ function App() {
                           <Route exact path='/musicEvents' component={EventDashboard} />
                           <Route path='/musicEvents/:id' component={EventDetails} />
                           <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
+                          <Route path='/profiles/:username' component={ProfilePage} />
                           <Route path='/errors' component={TestErrors} />
                           <Route path='/server-error' component={ServerError} />
                           <Route path='/login' component={LoginForm} />
