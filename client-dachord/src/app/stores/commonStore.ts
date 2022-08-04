@@ -7,7 +7,7 @@ export default class CommonStore {
     appLoaded = false;
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this)
 
         reaction(
             () => this.token,

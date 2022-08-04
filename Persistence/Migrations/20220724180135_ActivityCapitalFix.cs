@@ -11,7 +11,7 @@ namespace Persistence.Migrations
             migrationBuilder.RenameColumn(
                 name: "isHostOfTheEvent",
                 table: "ActivityAttendees",
-                newName: "IsHostOfTheEvent");
+                newName: "isHostOfTheEvent");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

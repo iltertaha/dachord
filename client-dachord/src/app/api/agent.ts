@@ -1,10 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
+import { history } from '../..';
 import { Activity, ActivityFormValues } from '../models/activity';
-import { history } from '../../index';
-import { store } from '../stores/store';
+import { Photo, Profile } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
-import { Profile } from '../models/profile';
+import { store } from '../stores/store';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -86,8 +86,8 @@ const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 const requests = {
         get: <T> (url: string) => axios.get<T>(url).then(responseBody),
         post: <T> (url: string, body: { }) => axios.post<T>(url, body).then(responseBody),
-        put: <T> (url: string, body: { }) => axios.put<T>(url, body).then(responseBody),
-        delete: <T> (url: string) => axios.delete<T>(url).then(responseBody),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    delete: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 }
 
 const MusicEvents = {
@@ -107,7 +107,7 @@ const Account = {
 }
 
 const Profiles = {
-    get: (username: string) => requests.get < Profile > (`/profiles/${username}`)
+    get: (username: string) => requests.get<Profile>(`/profiles/${username}`)
 }
 
 

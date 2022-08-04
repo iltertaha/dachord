@@ -1,14 +1,12 @@
-﻿using Application.core;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Application.core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Profiles
 {
@@ -32,7 +30,7 @@ namespace Application.Profiles
 
             public async Task<Result<Profile>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await context.Users.ProjectTo<Profile>(mapper.ConfigurationProvider)
+                var user = await this.context.Users.ProjectTo<Profile>(mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(x => x.Username == request.Username);
 
                 if(user == null) { return null; }

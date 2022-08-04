@@ -84,8 +84,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await userManager.Users.Include(a => a.Photos)
-                .FirstOrDefaultAsync( x => x.Email ==  User.FindFirstValue(ClaimTypes.Email));
+            var user = await userManager.Users.Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
             return CreateUserObject(user);
         }
@@ -97,7 +97,7 @@ namespace API.Controllers
                 DisplayName = user.DisplayName,
                 Image = user?.Photos?.FirstOrDefault(x => x.IsMainPhoto)?.Url,
                 Token = tokenService.CreateToken(user),
-                UserName = user.UserName
+                Username = user.UserName
             };
         }
     }

@@ -17,7 +17,7 @@ export default class ActivityStore {
     constructor() {
         // infer types whether action(method)
             // or observable(property)
-        makeAutoObservable(this);
+        makeAutoObservable(this)
     }
 
     get activitiesByDate() {

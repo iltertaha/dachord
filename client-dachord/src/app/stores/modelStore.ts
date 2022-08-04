@@ -12,7 +12,7 @@ export default class ModalStore {
     }
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this)
     }
 
     openModal = (content: JSX.Element) => {

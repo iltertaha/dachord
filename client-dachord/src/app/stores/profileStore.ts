@@ -1,13 +1,22 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { computed, makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Profile } from "../models/profile";
+import { store } from "./store";
 
 export default class ProfileStore {
     profile: Profile | null = null;
     loadingProfile = false;
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this)
+    }
+
+    get isCurrentUser() {
+
+        if (store.userStore.user && this.profile) {
+            return store.userStore.user.username === this.profile.username;
+        }
+        return false;
     }
 
     loadProfile = async (username: string) => {
