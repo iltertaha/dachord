@@ -50,7 +50,7 @@ namespace Application.Photos
                     currentPhoto.IsMainPhoto = false;
                 }
 
-                currentPhoto.IsMainPhoto = true;
+                photo.IsMainPhoto = true;
 
                 var success = await context.SaveChangesAsync() > 0;
 
