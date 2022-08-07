@@ -17,6 +17,12 @@ namespace Application.Profiles
 
         public string Image { get; set; }
 
+        // to indicate current logged in user following this profile or not
+        public bool Following { get; set; }
+
+        public int FollowersCnt { get; set; }
+
+        public int FollowingCnt { get; set; }
         public ICollection<Photo> Photos { get; set; }
         
     }
