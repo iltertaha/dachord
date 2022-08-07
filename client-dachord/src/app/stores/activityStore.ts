@@ -213,7 +213,10 @@ export default class ActivityStore {
         }
 
 
+    }
 
+    clearSelectedEvent = () => {
+        this.selectedEvent = undefined;
     }
 
 }

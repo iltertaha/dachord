@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@microsoft/signalr": "^6.0.7",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.3.0",

@@ -22,5 +22,6 @@ namespace Application.MusicEvents
 
         public bool IsCancelled { get; set; }
         public ICollection<ParticipantDto> Attendees { get; set; }
+
     }
 }

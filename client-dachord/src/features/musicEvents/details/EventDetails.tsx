@@ -14,14 +14,15 @@ import EventDetailedSidebar from './EventDetailedSidebar';
 export default observer( function EventDetails() {
 
     const { activityStore } = useStore();
-    const { selectedEvent: musicEvent, loadActivity, loadingInitial } = activityStore;
+    const { selectedEvent: musicEvent, loadActivity, loadingInitial, clearSelectedEvent } = activityStore;
     const { id } = useParams<{id: string}>();
 
 
     useEffect(() => {
         if (id) loadActivity(id);
+        return () => clearSelectedEvent();
 
-    },[id,loadActivity] );
+    }, [id, loadActivity, clearSelectedEvent]);
 
     if (loadingInitial || !musicEvent) return <LoadingComponent />;
 
@@ -33,7 +34,7 @@ export default observer( function EventDetails() {
             <Grid.Column width={10}>
                 <EventDetailedHeader event={musicEvent} />
                 <EventDetailedInfo event={musicEvent} />
-                <EventDetailedChat />
+                <EventDetailedChat activityId={musicEvent.id} />
             </Grid.Column>
             
         </Grid>
