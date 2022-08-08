@@ -15,5 +15,11 @@ namespace Application.MusicEvents
         public string Bio { get; set; }
 
         public string Image { get; set; }
+
+        public bool Following { get; set; }
+
+        public int FollowersCnt { get; set; }
+
+        public int FollowingCnt { get; set; }
     }
 }
