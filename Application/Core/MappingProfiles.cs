@@ -29,7 +29,7 @@ namespace Application.Core
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.AppUser.Photos.FirstOrDefault(x => x.IsMainPhoto).Url))
                 .ForMember(d => d.FollowersCnt, o => o.MapFrom(s => s.AppUser.Followers.Count))
                 .ForMember(d => d.FollowingCnt, o => o.MapFrom(s => s.AppUser.Followings.Count))
-                .ForMember(d => d.FollowingCnt, o => o.MapFrom(s => s.AppUser.Followers.Any(x => x.Observer.UserName == currentUsername)));
+                .ForMember(d => d.Following, o => o.MapFrom(s => s.AppUser.Followers.Any(x => x.Observer.UserName == currentUsername)));
 
 
 
@@ -40,7 +40,7 @@ namespace Application.Core
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMainPhoto).Url))
                 .ForMember(d => d.FollowersCnt, o => o.MapFrom(s => s.Followers.Count))
                 .ForMember(d => d.FollowingCnt, o => o.MapFrom(s => s.Followings.Count))
-                .ForMember(d => d.FollowingCnt, o => o.MapFrom(s => s.Followers.Any(x => x.Observer.UserName == currentUsername)));
+                .ForMember(d => d.Following, o => o.MapFrom(s => s.Followers.Any(x => x.Observer.UserName == currentUsername)));
             
 
             CreateMap<Comment,CommentDto>()
