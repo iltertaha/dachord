@@ -1,4 +1,5 @@
-﻿using Application.MusicEvents;
+﻿using Application.Core;
+using Application.MusicEvents;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +14,9 @@ namespace API.Controllers
         
         
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetActivities([FromQuery]PagingParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResult(await Mediator.Send(new List.Query { Params = param}));
 
         }
 

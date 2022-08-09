@@ -1,4 +1,5 @@
 ﻿using Application.core;
+using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -17,9 +18,11 @@ namespace Application.MusicEvents
 {
     public class List
     {
-        public class Query : IRequest<Result<List<ActivityDto>>> { }
+        public class Query : IRequest<Result<PagedList<ActivityDto>>> { 
+            public PagingParams Params { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDto>>>
         {
             private readonly DataContext _context;
             private readonly ILogger<List> _logger;
@@ -34,15 +37,19 @@ namespace Application.MusicEvents
                 this.userAccessor = userAccessor;
             }
 
-            public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                // defer the execution, dont use toList 
+                var activities =  _context.Activities
+                    .ProjectTo<ActivityDto>(mapper.ConfigurationProvider, new { currentUsername = userAccessor.GetUsername() })
+                    .AsQueryable();
 
-                var activities = await _context.Activities
-                    .ProjectTo<ActivityDto>(mapper.ConfigurationProvider, new { currentUsername =  userAccessor.GetUsername() })
-                    .ToListAsync(cancellationToken);
 
 
-                return Result<List<ActivityDto>>.Success(activities);
+
+                return Result<PagedList<ActivityDto>>.Success(
+                    await PagedList<ActivityDto>.CreateAsync(activities, request.Params.PageNumber, request.Params.PageSize  )
+                    );
 
             }
         }
