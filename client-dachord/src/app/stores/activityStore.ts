@@ -219,4 +219,15 @@ export default class ActivityStore {
         this.selectedEvent = undefined;
     }
 
+    updateAttendeeFollowing = (username: string) => {
+        this.musicEventsRegistry.forEach(activity => {
+            activity.attendees!.forEach(attendee => {
+                if (attendee.username === username) {
+                    attendee.following ? attendee.followersCnt-- : attendee.followersCnt++;
+                    attendee.following = !attendee.following;
+                }
+            })
+        })
+    }
+
 }

@@ -10,12 +10,14 @@ import ProfileHeader from "./ProfileHeader";
 export default observer(function ProfilePage() {
 	const { username } = useParams<{ username: string }>();
 	const { profileStore } = useStore();
-	const { loadingProfile, loadProfile, profile } = profileStore;
+	const { loadingProfile, loadProfile, profile, setCurrentTab } = profileStore;
 
 	useEffect(() => {
-		console.log("username: " + username);
 		loadProfile(username);
-	}, [loadProfile, username])
+		return () => {
+			setCurrentTab(0);
+		}
+	}, [loadProfile, username, setCurrentTab])
 
 
 	if (loadingProfile) {

@@ -12,7 +12,7 @@ interface Props {
 export default function EventListItemAttendee({ attendees }: Props) {
     const styles = {
         borderColor: "blue",
-        borderWidth: 2
+        borderWidth: 3
     }
 
 
