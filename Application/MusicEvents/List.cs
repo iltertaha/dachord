@@ -41,6 +41,7 @@ namespace Application.MusicEvents
             {
                 // defer the execution, dont use toList 
                 var activities =  _context.Activities
+                    .OrderBy(d => d.Date)
                     .ProjectTo<ActivityDto>(mapper.ConfigurationProvider, new { currentUsername = userAccessor.GetUsername() })
                     .AsQueryable();
 

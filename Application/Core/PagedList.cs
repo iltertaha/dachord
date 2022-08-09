@@ -12,6 +12,7 @@ namespace Application.Core
         public PagedList(IEnumerable<T> elements, int count, int pageNumber, int pageSize)
         {
             CurrentPage = pageNumber;
+            // TotalPages 
             PageCount = (int)Math.Ceiling(count / (double)pageSize);
             PageSize = pageSize;
             TotalCount = count;
