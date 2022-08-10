@@ -19,7 +19,7 @@ namespace Application.MusicEvents
     public class List
     {
         public class Query : IRequest<Result<PagedList<ActivityDto>>> { 
-            public PagingParams Params { get; set; }
+            public EventParams Params { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDto>>>
@@ -41,11 +41,22 @@ namespace Application.MusicEvents
             {
                 // defer the execution, dont use toList 
                 var activities =  _context.Activities
+                    // Events after requested date
+                    .Where( d => d.Date >= request.Params.StartDate)
                     .OrderBy(d => d.Date)
                     .ProjectTo<ActivityDto>(mapper.ConfigurationProvider, new { currentUsername = userAccessor.GetUsername() })
                     .AsQueryable();
 
+                if(request.Params.IsGoing && !request.Params.IsHost)
+                {
+                    // Apply filter according to current user
+                    activities = activities.Where(x => x.Attendees.Any( a => a.Username == userAccessor.GetUsername()));
+                }
 
+                if(request.Params.IsHost && !request.Params.IsGoing)
+                {
+                    activities = activities.Where(x => x.HostUsername == userAccessor.GetUsername());
+                }
 
 
                 return Result<PagedList<ActivityDto>>.Success(
