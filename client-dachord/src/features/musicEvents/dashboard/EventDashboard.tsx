@@ -7,6 +7,7 @@ import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
 import EventFilters from './EventFilters';
 import EventList from './EventList';
+import EventListItemPlaceholder from './EventListItemPlaceholder';
 
 
 export default observer( function EventDashboard() {
@@ -46,19 +47,26 @@ export default observer( function EventDashboard() {
 
 
 
-    if (activityStore.loadingInitial && !loadingNext) return <LoadingComponent content='Loading Dachord App' />
-
 
     return(
         <Grid>
             <Grid.Column width="10">
-                <InfiniteScroll pageStart={0}
-                    loadMore={handleGetNext}
-                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalItems}
-                    initialLoad={false}
-                >
-                    <EventList />
-                </InfiniteScroll>
+                {activityStore.loadingInitial && !loadingNext ? (
+                    <>
+                        <EventListItemPlaceholder/>
+                        <EventListItemPlaceholder />
+                    </>
+                ) : (
+                        <InfiniteScroll pageStart={0}
+                            loadMore={handleGetNext}
+                            hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalItems}
+                            initialLoad={false}
+                        >
+                            <EventList />
+                        </InfiniteScroll>
+                        
+                        )}
+                
                 
                 
             </Grid.Column>
