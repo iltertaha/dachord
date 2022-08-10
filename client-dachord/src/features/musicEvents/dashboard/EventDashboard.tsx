@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import {Button, Grid } from 'semantic-ui-react';
+import InfiniteScroll from 'react-infinite-scroller';
+import {Button, Grid, Loader } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
@@ -45,24 +46,27 @@ export default observer( function EventDashboard() {
 
 
 
-    if (activityStore.loadingInitial) return <LoadingComponent content='Loading Dachord App' />
+    if (activityStore.loadingInitial && !loadingNext) return <LoadingComponent content='Loading Dachord App' />
 
 
     return(
         <Grid>
             <Grid.Column width="10">
-                <EventList />
-                <Button
-                    floated='right'
-                    content='Load more events'
-                    positive
-                    onClick={handleGetNext}
-                    loading={loadingNext}
-                    disabled={pagination?.totalItems == pagination?.currentPage}
-                />
+                <InfiniteScroll pageStart={0}
+                    loadMore={handleGetNext}
+                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalItems}
+                    initialLoad={false}
+                >
+                    <EventList />
+                </InfiniteScroll>
+                
+                
             </Grid.Column>
             <Grid.Column width="6">
                <EventFilters/>
+            </Grid.Column>
+            <Grid.Column width={8}>
+                <Loader active={loadingNext} />
             </Grid.Column>
         </Grid>
 
