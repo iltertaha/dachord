@@ -3,6 +3,7 @@ import React from "react";
 import { Tab } from "semantic-ui-react";
 import { Profile } from "../../app/models/profile";
 import { useStore } from "../../app/stores/store";
+import ProfileEvents from "./ProfileEvents";
 import ProfileFollowings from "./ProfileFollowings";
 import ProfilePhotos from "./ProfilePhotos";
 
@@ -18,7 +19,7 @@ export default observer(function ProfileContent({ profile }: Props) {
     const pageSections = [
         { menuItem: 'About', render: () => <Tab.Pane>About Content</Tab.Pane> },
         { menuItem: 'Photos', render: () => <ProfilePhotos profile={profile}/> },
-        { menuItem: 'Activities', render: () => <Tab.Pane>Activities Content</Tab.Pane> },
+        { menuItem: 'Events', render: () => <ProfileEvents/> },
         { menuItem: 'Followers', render: () => <ProfileFollowings/> },
         { menuItem: 'Following', render: () => <ProfileFollowings /> }
     ];
