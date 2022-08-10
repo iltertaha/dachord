@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Activity, ActivityFormValues } from "../models/activity";
 import { format } from "date-fns";
@@ -16,21 +16,70 @@ export default class ActivityStore {
     loadingInitial = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
+    predicate = new Map().set('all', true);
 
     constructor() {
         // infer types whether action(method)
             // or observable(property)
         makeAutoObservable(this)
+
+        // react to changes 
+        reaction(
+            // if any of the keys change
+            () => this.predicate.keys(),
+            () => {
+                this.pagingParams = new PagingParams();
+                this.musicEventsRegistry.clear();
+                this.loadActivities();
+            }
+
+
+        )
     }
 
     setPagingParams = (pagingParams: PagingParams) => {
         this.pagingParams = pagingParams;
     }
 
+    setPredicate = (predicate: string, value: string | Date) => {
+        const clearPredicate = () => {
+            this.predicate.forEach((value, key) => {
+                if (key !== 'startDate')
+                    this.predicate.delete(key);
+            })
+        }
+        switch (predicate) {
+            case 'all':
+                clearPredicate();
+                this.predicate.set('all', true);
+                break;
+            case 'isGoing':
+                clearPredicate();
+                this.predicate.set('isGoing', true);
+                break;
+            case 'isHost':
+                clearPredicate();
+                this.predicate.set('isHost', true);
+                break;
+            case 'startDate':
+                this.predicate.delete('startDate');
+                this.predicate.set('startDate', value);
+                
+        }
+    }
+
     get axiosParams() {
         const params = new URLSearchParams();
         params.append('pageNumber', this.pagingParams.pageNumber.toString());
         params.append('pageSize', this.pagingParams.pageSize.toString());
+        this.predicate.forEach((value, key) => {
+            if (key === 'startDate') {
+                params.append(key, (value as Date).toString())
+            }
+            else {
+                params.append(key, value);
+            }
+        })
         return params;
     }
 
