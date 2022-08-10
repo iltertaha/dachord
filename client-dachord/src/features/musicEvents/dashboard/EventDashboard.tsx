@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
-import {Grid } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import {Button, Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
 import EventFilters from './EventFilters';
 import EventList from './EventList';
@@ -10,7 +11,18 @@ import EventList from './EventList';
 export default observer( function EventDashboard() {
 
     const { activityStore } = useStore();
-    const { loadActivities, musicEventsRegistry } = activityStore;
+    const { loadActivities, musicEventsRegistry, setPagingParams, pagination } = activityStore;
+    const [loadingNext, setLoadingNext] = useState(false);
+    
+
+
+
+    function handleGetNext() {
+        setLoadingNext(true);
+        setPagingParams(new PagingParams(pagination!.currentPage + 1))
+        loadActivities().then(() => setLoadingNext(false));
+    }
+
 
     // destructure only activityStore from the whole store
 
@@ -39,7 +51,15 @@ export default observer( function EventDashboard() {
     return(
         <Grid>
             <Grid.Column width="10">
-                <EventList/>
+                <EventList />
+                <Button
+                    floated='right'
+                    content='Load more events'
+                    positive
+                    onClick={handleGetNext}
+                    loading={loadingNext}
+                    disabled={pagination?.totalItems == pagination?.currentPage}
+                />
             </Grid.Column>
             <Grid.Column width="6">
                <EventFilters/>
