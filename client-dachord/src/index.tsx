@@ -10,6 +10,7 @@ import { store, StoreContext } from './app/stores/store';
 import { Router  } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import { createBrowserHistory } from 'history';
+import ScrollTop from './app/layout/ScrollTop';
 
 
 export const history = createBrowserHistory();
@@ -21,6 +22,7 @@ ReactDOM.render(
     /*<React.StrictMode>*/
     <StoreContext.Provider value={store}>
         <Router history={history}>
+            <ScrollTop/>
             <App />
         </Router>
         
