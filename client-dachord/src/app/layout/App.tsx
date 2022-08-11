@@ -18,6 +18,7 @@ import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import LoginForm from '../../features/users/LoginForm';
 import ProfilePage from '../../features/profiles/ProfilePage';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
     const location = useLocation();
@@ -57,13 +58,13 @@ function App() {
                   <NavBar />
                   <Container style={{ marginTop: '7em' }}>
                       <Switch>
-                          <Route exact path='/musicEvents' component={EventDashboard} />
-                          <Route path='/musicEvents/:id' component={EventDetails} />
-                          <Route key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
-                          <Route path='/profiles/:username' component={ProfilePage} />
-                          <Route path='/errors' component={TestErrors} />
-                          <Route path='/server-error' component={ServerError} />
-                          <Route path='/login' component={LoginForm} />
+                          <PrivateRoute exact path='/musicEvents' component={EventDashboard} />
+                          <PrivateRoute path='/musicEvents/:id' component={EventDetails} />
+                          <PrivateRoute key={location.key} path={['/createEvent', '/manage/:id']} component={EventForm} />
+                          <PrivateRoute path='/profiles/:username' component={ProfilePage} />
+                          {/*<PrivateRoute path='/errors' component={TestErrors} />*/}
+                          {/*<Route path='/server-error' component={ServerError} />*/}
+                          {/*<Route path='/login' component={LoginForm} />*/}
                           <Route component={NotFound} />
                       </Switch>
                       
