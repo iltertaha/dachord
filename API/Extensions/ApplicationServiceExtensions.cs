@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.MusicEvents;
 using Application.Photos;
+using AutoMapper;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
@@ -21,7 +22,7 @@ namespace API.Extensions
             });
             services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
 
             });
             services.AddCors(opt =>

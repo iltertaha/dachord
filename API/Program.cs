@@ -17,6 +17,7 @@ namespace API
     {
         public static async Task Main(string[] args)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             var host = CreateHostBuilder(args).Build();
             // scope will be disposed after exiting main
             using var scope = host.Services.CreateScope();
